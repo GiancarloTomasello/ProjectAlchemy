@@ -3,9 +3,27 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
+var items = [
+  {'name': 'a', 'cost': 100, 'rarity': 'Common'},
+  {'name': 'b', 'cost': 50, 'rarity': 'Common'},
+  {'name': 'c', 'cost': 509, 'rarity': 'Rare'},
+];
+
+//Run when window has loaded
+window.onload = () => {
+  const itemListContainer = document.getElementById("itemList");
+  items.forEach(item =>{
+    const listItem = document.createElement("li");
+    listItem.textContent = `Name:${item.name} Rarity:${item.rarity} cost:${item.cost}`
+    itemListContainer.appendChild(listItem)
+  })
+}
+
+
 function App() {
   const [count, setCount] = useState(0)
 
+  console.log(items[0])
   return (
     <>
       <div>
@@ -28,6 +46,7 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+      <ul id='itemList'>Item List</ul>
     </>
   )
 }
