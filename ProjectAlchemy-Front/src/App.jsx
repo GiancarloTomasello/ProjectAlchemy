@@ -2,8 +2,9 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import Card from "./Card.jsx"
-import Banner from './Banner.jsx'
+import Card from "./components/Card.jsx"
+import Banner from './components/Banner.jsx'
+import SidePannel from './components/SidePannel.jsx'
 
 var items = [
   {'name': 'a', 'cost': 100, 'rarity': 'Common'},
@@ -27,6 +28,7 @@ function App() {
   console.log(items[0])
   return (
     <>
+      <SidePannel/>
       <Banner/>
       <div>
         <h1>Items</h1>
