@@ -69,6 +69,24 @@
   max-height: 100%;
   height: 100%;
   transform: translateX(100%) 
+  /* transition? */
+}
+
+.cardSimple{
+  border: 1px solid hsl(0, 0%, 14%);
+  background-color: goldenrod;
+  border-radius: 5px;
+  text-align: center;
+  max-width: 100%;
+  padding: 5px;
+  margin: 5px;
+  justify-content: center;
+  align-items: center;
+  /* display: flex;
+  flex-wrap: wrap; */
+}
+.cardSimple h2{
+  font-weight: bold
 }
 
 /* :root {

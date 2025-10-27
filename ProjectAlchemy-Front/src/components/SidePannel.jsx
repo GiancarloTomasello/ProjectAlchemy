@@ -1,8 +1,12 @@
 import React, { useCallback } from 'react'
 import {useState, useEffect, useRef} from 'react'
-// const buttonElement = document.getElementById("sidePannelButton") 
+import { useStoreContext } from '../context'
+import ItemCardSimple from './ItemCardSimple';
 
-function SidePannel(){
+function SidePannel({items}){
+    const {stockedItems, setStockedItems} = useStoreContext();
+    
+
     const sidePanelRef = useRef(null);
     const buttonRef = useRef(null);
     const [sidePanelState, setSidePanelState] = useState(false);
@@ -23,11 +27,14 @@ function SidePannel(){
             }
     }, [setSidePanelState, sidePanelState])
 
+    //Implementation to close panel when clicking off
+    //BUG: Currently triggers when clicking on itemCards too
     useEffect(() => {
         function handler (e){
+            console.log(e.target.parentElement.contains(sidePanelRef.current))
             if(sidePanelRef.current && sidePanelState == true && e.target != buttonRef.current){
                 if(e.target != sidePanelRef.current){
-                    TogglePanel()
+                    //TogglePanel()
                 }
             }
         }
@@ -40,27 +47,18 @@ function SidePannel(){
     }, [sidePanelState, TogglePanel])
 
 
-
-
-    // useEffect(() =>{
-    //     console.log("Current sidePanelState: ", sidePanelState);
-    // }, [sidePanelState])
-
-
     return(
         <>
         <button ref={buttonRef} id="sidePannelButton" onClick={TogglePanel}
-            class="fixed left-5 rounded-md bg-white/10 px-2.5 py-1.5 hover:bg-white/20">
+            className="fixed left-5 rounded-md bg-white/10 px-2.5 py-1.5 hover:bg-white/20">
                 Testing Side
         </button>
 
 
         <div id="sidePanel" ref={sidePanelRef} className="sidePanel">
-            <p>testing side pannel two</p>
+            <h1>Item List</h1>
             <ol>
-                <li>ONE</li>
-                <li>TWO</li>
-                <li>THREE</li>
+                {stockedItems.map(item => <li><ItemCardSimple item={item} key={item.id}/></li>)}
             </ol>
         </div>     
         </>
