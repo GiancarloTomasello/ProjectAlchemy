@@ -1,56 +1,30 @@
 require("dotenv").config();
-const fs = require("fs");
-const pg = require("pg");
 const express = require('express');
 const app = express();
 const axios = require('axios');
 
+
+const { neon } = require("@neondatabase/serverless");
+const PORT = process.env.PORT || 3001;
+
+
+const sql = neon(process.env.DATABASE_URL);
+
 app.use(express.json());
-//app.use(cors())
 
-const port = process.env.DB_PORT;
 
-console.log(process.env.DB_PORT);
-
-const config = {
-user: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    database: process.env.DATABASE,
-    ssl: {
-        rejectUnauthorized: true,
-        ca: fs.readFileSync("./ca.pem").toString(),
-    },
-};
-
-const client = new pg.Client(config);
-
-client.connect(function (err) {
-  if (err) throw err;
-  client.query("SELECT VERSION()", [], function (err, result) {
-    if (err) throw err;
-
-    console.log(result.rows[0]);
-    console.log("Running app")
-    // client.end(function (err) {
-    //   if (err) throw err;
-    // });
-  });
+app.get('/', async (req,res) =>{
+  // res.status(200)
+  // res.send("Welcome to the root URL of Server")
+  const sql = neon(`${process.env.DATABASE_URL}`);
+  const response = await sql`SELECT version()`;
+  const {version} = response[0];
+  res.json({version});
 });
 
-app.listen(port, (error)=>{
-  if(!error){
-    console.log(`Server running on port ${port}`)
-  }else{
-    console.log("Error occured, server did not start", error)
-  }
+app.listen(PORT, ()=> {
+  console.log(`Listening to http://localhost:${PORT}`);
 })
-
-app.get('/', (req,res) =>{
-  res.status(200)
-  res.send("Welcome to the root URL of Server")
-});
 
 app.get('/getItems', async (req,res) =>{
 
