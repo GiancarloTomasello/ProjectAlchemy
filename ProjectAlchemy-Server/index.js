@@ -16,7 +16,7 @@ app.use(express.json());
 app.get('/', async (req,res) =>{
   // res.status(200)
   // res.send("Welcome to the root URL of Server")
-  const sql = neon(`${process.env.DATABASE_URL}`);
+  // const sql = neon(`${process.env.DATABASE_URL}`);
   const response = await sql`SELECT version()`;
   const {version} = response[0];
   res.json({version});
@@ -24,6 +24,20 @@ app.get('/', async (req,res) =>{
 
 app.listen(PORT, ()=> {
   console.log(`Listening to http://localhost:${PORT}`);
+})
+
+
+app.get('/getStore/:id', async (req,res) =>{
+  const storeId = parseInt(req.params.id);
+  const result = await sql.query(`SELECT * from StoreFront where id = ${storeId}`);
+  res.status(200).send(result);
+})
+
+app.get('/getStock/:id', async (req,res) =>{
+  const storeId = parseInt(req.params.id);
+  console.log(req.params.id,storeId)
+  const result = await sql.query(`SELECT * from storetoitem where store_id = ${storeId}`);
+  res.status(200).send(result);
 })
 
 app.get('/getItems', async (req,res) =>{
