@@ -4,8 +4,8 @@ import { useStoreContext } from '../context'
 import ItemCardSimple from './ItemCardSimple';
 
 function SidePannel({items}){
-    const {stockedItems, setStockedItems} = useStoreContext();
-    
+    const {stockedItems, stockedItemList, itemCatalog} = useStoreContext();
+    console.log('stocklist inpannel: ', stockedItemList)
 
     const sidePanelRef = useRef(null);
     const buttonRef = useRef(null);
@@ -58,7 +58,7 @@ function SidePannel({items}){
         <div id="sidePanel" ref={sidePanelRef} className="sidePanel">
             <h1>Item List</h1>
             <ol>
-                {stockedItems.map(item => <li><ItemCardSimple item={item} key={item.id}/></li>)}
+                {itemCatalog.map(item => <li><ItemCardSimple item={item} key={item.id}/></li>)}
             </ol>
         </div>     
         </>
