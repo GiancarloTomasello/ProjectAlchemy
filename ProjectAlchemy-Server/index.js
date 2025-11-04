@@ -40,7 +40,6 @@ app.get('/getStock/:id', async (req,res) =>{
   const storeId = parseInt(req.params.id);
   //console.log(req.params.id,storeId)
   const result = await sql.query(`SELECT * from storetoitem where store_id = ${storeId}`);
-  console.log(result[0].api_index)
   res.status(200).send(result);
 })
 
