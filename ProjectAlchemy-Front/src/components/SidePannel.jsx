@@ -54,12 +54,20 @@ function SidePannel({items}){
                 Testing Side
         </button>
 
-
+        {/* <div className='fixed right-0 left-auto top-0 flex gap-5 z-2 '>
+            <h1>TESTING</h1>
+            <button>click me</button>
+        </div> */}
         <div id="sidePanel" ref={sidePanelRef} className="sidePanel">
-            <h1>Item List</h1>
-            <ol>
-                {itemCatalog.map(item => <li><ItemCardSimple item={item} key={item.id}/></li>)}
-            </ol>
+            <div className="sidepanel header">
+                <h1 className="font-bold">Item List</h1>
+                <button className='sideButton'>Update Catalog</button>
+            </div>
+            <div className='sidepanel catalog'>
+                <ol className=''>
+                    {itemCatalog.map(item => <li><ItemCardSimple item={item} key={item.id}/></li>)}
+                </ol>
+            </div>
         </div>     
         </>
     );

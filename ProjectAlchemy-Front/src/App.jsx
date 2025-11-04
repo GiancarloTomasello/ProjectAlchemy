@@ -50,6 +50,7 @@ window.onload = () => {
     magicListContainer.appendChild(listItem)
   })
   
+
 }
 
 
@@ -82,6 +83,9 @@ function App() {
 
       <ul id='equptList'>DB Equipment LIST</ul>
       <ul id='magicList'>DB Magic LIST</ul>
+      <div id='dynamicShop'>
+          <h1>TESTING</h1>
+      </div>
     </>
   )
 }
