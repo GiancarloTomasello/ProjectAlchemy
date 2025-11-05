@@ -52,7 +52,6 @@ function App() {
       <div>
       </div> */}
       {/* {stockedItems.filter((item) => item.inStock).map((item) => <Card item={item} key={item.id}/>)} */}
-      {/* <ul id='itemList'>Item List</ul>
       <h1>DB ITEMS</h1>
       <ul id='dbitems' className="flex">
         {(!isLoadingCatalog && !catalogError) ?
@@ -61,7 +60,7 @@ function App() {
                         <p>ERROR</p>}
       </ul>
 
-      <ul id='equptList'>DB Equipment LIST</ul>
+      {/* <ul id='equptList'>DB Equipment LIST</ul>
       <ul id='magicList'>DB Magic LIST</ul> */}
       <div id='dynamicShop'>
           {dynamicShopComponent ? dynamicShopComponent : <p>customShopLayoutNull</p>}

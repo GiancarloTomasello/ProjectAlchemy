@@ -50,7 +50,7 @@ function SidePannel({items}){
     return(
         <>
         <button ref={buttonRef} id="sidePannelButton" onClick={TogglePanel}
-            className="fixed left-5 rounded-md bg-white/10 px-2.5 py-1.5 hover:bg-white/20">
+            className="fixed z-20 left-5 rounded-md bg-white/10 px-2.5 py-1.5 hover:bg-white/20">
                 Testing Side
         </button>
 
