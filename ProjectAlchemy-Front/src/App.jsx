@@ -1,13 +1,11 @@
 import { useState, useEffect } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import Card from "./components/Card.jsx"
 import Banner from './components/Banner.jsx'
 import SidePannel from './components/SidePannel.jsx'
 import ItemCardSimple from './components/ItemCardSimple.jsx'
 import { useStoreContext } from './context.jsx'
-import {dummyItems, filterTestData} from './assets/assets'
+import {filterTestData} from './assets/assets'
 
 var items = [
   {'name': 'a', 'cost': 100, 'rarity': 'Common', 'description': 'test test', 'instock': true},
@@ -15,11 +13,10 @@ var items = [
   {'name': 'c', 'cost': 509, 'rarity': 'Rare', 'description': 'test test', 'instock': true},
 ];
 
-const testItemList = [
-  <ItemCardSimple />,
-  <ItemCardSimple/>
-]
-
+const componentMap ={
+  'Card': Card,
+  'Banner': Banner,
+};
 
 //Run when window has loaded
 window.onload = () => {
@@ -60,6 +57,30 @@ function App() {
   const {itemCatalog, stockedItemList, isLoadingCatalog, catalogError} = useStoreContext();
   //const [data, setData] = useState([]);
 
+  //const componentName = 'Card';
+  //const DynamicComponent = componentMap[componentName];
+  const [dynamicShopComponent, setDynamicShopComponent] = useState([]);
+  const [CustomComponentList, setCustomComponentList] =useState(['Banner', 'Card', 'Card'])
+
+  // CustomComponentList.map((item,index) =>{
+  //   console.log(item)
+  //   return index
+  // })
+
+  useEffect(()=>{
+
+
+    const reacthtml = CustomComponentList.map((item,index) =>{
+      const DynamicComponent = componentMap[item]
+      //console.log(dyna)
+      const newComponent = DynamicComponent ? <DynamicComponent item={items[0]} key={index}/> : <p>Component Not found</p>
+      return newComponent
+    })
+
+    console.log(reacthtml)
+
+    setDynamicShopComponent(reacthtml)
+  }, [setDynamicShopComponent, CustomComponentList])
 
   console.log(items[0])
   return (
@@ -85,6 +106,9 @@ function App() {
       <ul id='magicList'>DB Magic LIST</ul>
       <div id='dynamicShop'>
           <h1>TESTING</h1>
+          {dynamicShopComponent ? dynamicShopComponent : <p>customShopLayoutNull</p>}
+
+          {/* {DynamicComponent ? <DynamicComponent item={items[0]}/> : <p>Component Not found</p>} */}
       </div>
     </>
   )
