@@ -31,6 +31,7 @@
 }
 
 .banner{
+  position: relative;
   border: 1px solid hsla(0, 0%, 0%, 0.9);
   display:inline-block;
   width: 100%;
@@ -53,9 +54,9 @@
 
 .banner .banner-title{
   position:absolute;
-  top:3%;
   left:50%;
-  transform: translate(-50%, 50%);
+  top: 20%;
+  transform: translate(-50%, 0%);
 }
 
 .sidePanel {

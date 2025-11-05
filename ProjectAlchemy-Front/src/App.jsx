@@ -57,30 +57,28 @@ function App() {
   const {itemCatalog, stockedItemList, isLoadingCatalog, catalogError} = useStoreContext();
   //const [data, setData] = useState([]);
 
-  //const componentName = 'Card';
-  //const DynamicComponent = componentMap[componentName];
+
   const [dynamicShopComponent, setDynamicShopComponent] = useState([]);
   const [CustomComponentList, setCustomComponentList] =useState(['Banner', 'Card', 'Card'])
-
-  // CustomComponentList.map((item,index) =>{
-  //   console.log(item)
-  //   return index
-  // })
+  const [dynamicShopProps, setDynamicShopProps] = useState([
+    {title:"First shop"}, 
+    {name:"Basic Sword", cost:"100GP", type:"Weapon", rarity:"Common"},
+    {name:"Basic Wand", cost:"200GP", type:"Wand", rarity:"Common"}
+  ])
 
   useEffect(()=>{
-
-
-    const reacthtml = CustomComponentList.map((item,index) =>{
+    
+    const shopComponents = CustomComponentList.map((item,index) =>{
+      console.log('test')
       const DynamicComponent = componentMap[item]
-      //console.log(dyna)
-      const newComponent = DynamicComponent ? <DynamicComponent item={items[0]} key={index}/> : <p>Component Not found</p>
+      console.log(dynamicShopProps[index])
+      const newComponent = DynamicComponent ? <DynamicComponent {...dynamicShopProps[index]} key={index}/> : <p>Component Not found</p>
       return newComponent
     })
+    console.log(shopComponents)
 
-    console.log(reacthtml)
-
-    setDynamicShopComponent(reacthtml)
-  }, [setDynamicShopComponent, CustomComponentList])
+    setDynamicShopComponent(shopComponents)
+  }, [setDynamicShopComponent, CustomComponentList, dynamicShopProps])
 
   console.log(items[0])
   return (
