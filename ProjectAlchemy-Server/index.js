@@ -113,11 +113,8 @@ app.get('/getItems', async (req,res) =>{
   
 })
 
-async function getEquiptment(){
-  try{
-    const response = await axios.get('https://www.dnd5eapi.co/api/2014/equipment')
-    return response
-  } catch(error){
-    console.log(error)
-  }
-}
+app.get('/getStoreLayout/:id', async (req, res) =>{
+  const storeId = parseInt(req.params.id);
+  const result = await sql.query(`SELECT store_layout from storefront where id = ${storeId}`);
+  res.status(200).send(result[0].store_layout);
+})
