@@ -1,8 +1,8 @@
-function Banner({title}){
+function Banner(props){
     return(
         <div className="banner">
             <img className="banner-img" src="https://placehold.co/800x200" alt="banner img"></img>
-            <h1 className="banner-title">{title}</h1>
+            <h1 className="banner-title">{props.title}</h1>
         </div>
     );
 }

@@ -14,29 +14,7 @@ export const StoreProvider = ({ children }) => {
     const [stockedItemInfo, setStockedItemInfo] = useState([]);
     const [stockedItemList, setStockedItemList] = useState([]);
 
-    // const fetchCatalog = async () =>{
-    //     try{
-    //         const response = await axios.get('http://localhost:3001/getItems')
-    //         setItemCatalog(response.data)
-    //         setIsLoadingCatalog(false)
-    //     }catch(err){
-    //         setCatalogError(err.message);
-    //         console.error(err.message);
-    //         setIsLoadingCatalog(false);
-    //     }
-    // }
-
-    // async function fetchStockedItems(){
-    //     try{
-    //         const response = await axios.get('http://localhost:3001/getStock/1')
-    //         console.log("Response"+response)
-    //         setStockedItemInfo(response.data)
-    //         setStockedItemList(stockedItemInfo.map((item) => item.id))
-    //         console.log("StockedItemList: ", stockedItemList)
-    //     }catch(err){
-    //         console.log(err);
-    //     }
-    // }
+    const [storeLayout, setStoreLayout] = useState([]);
 
     useEffect(() => {
     //Make GET request to fetch all D&D items
@@ -63,8 +41,18 @@ export const StoreProvider = ({ children }) => {
         }
     }
 
+    const fetchStoreLayout = async() =>{
+        try{
+            const response = await axios.get('http://localhost:3001/getStoreLayout/1')
+            setStoreLayout(response.data)
+        }catch(err){
+            console.log(err);
+        }
+    }
+
     fetchCatalog()
     fetchStockedItems()
+    fetchStoreLayout()
   }, []);
 
   useEffect(()=>{
@@ -74,30 +62,11 @@ export const StoreProvider = ({ children }) => {
                 ))
   }, [stockedItemInfo])
 
-
-//   useEffect(() => {
-//     //Make GET request to fetch all D&D items
-//     axios
-//       .get('http://localhost:3001/getStock/1')
-//       .then((response) => {
-//         console.log("Response"+response)
-//         setStockedItemInfo(response.data)
-//         setStockedItemList(stockedItemInfo.map((item) => item.id))
-//         console.log("StockedItemList: ", stockedItemList)
-//         //setStoreStockLoading(false)
-//       })
-//       .catch((err) => {
-//         console.log(err.message);
-//         //setError(err.message);
-//         //setStoreStockLoading(false);
-//       })
-//   }, []);
-
     
     const value = {
         itemCatalog, setItemCatalog, isLoadingCatalog, setIsLoadingCatalog,
         catalogError, setCatalogError, stockedItemInfo, setStockedItemInfo,
-        stockedItemList, setStockedItemList
+        stockedItemList, setStockedItemList, storeLayout
     }
     return (
         <StoreContext.Provider value={value}>
