@@ -118,3 +118,46 @@ app.get('/getStoreLayout/:id', async (req, res) =>{
   const result = await sql.query(`SELECT store_layout from storefront where id = ${storeId}`);
   res.status(200).send(result[0].store_layout);
 })
+
+app.put('/saveStoreCatalog/:id', async (req,res) =>{
+  const storeID = parseInt(req.params.id)
+  console.log(req.body[0])
+
+  queryStr = (
+    `MERGE INTO storetoitem sti
+    USING (VALUES 
+    `)
+
+  for (i in req.body){
+    queryStr += ` ('${req.body[i].api_index}', '${JSON.stringify(req.body[i].overrides)}'::JSON, ${storeID}, ${req.body[i].inStock})`
+    if(i < Object.keys(req.body).length-1){
+      queryStr+=','
+    }
+  }
+
+  queryStr += (
+    `) AS temp_table(api_index, overrides, store_id, in_stock) 
+    ON sti.api_index = temp_table.api_index AND sti.store_id = temp_table.store_id
+    WHEN MATCHED AND temp_table.in_stock = false THEN
+      UPDATE SET
+        store_id = 2
+    WHEN MATCHED AND temp_table.in_stock = true THEN
+      UPDATE SET
+        api_index = temp_table.api_index,
+        overrides = temp_table.overrides,
+        store_id = temp_table.store_id
+    WHEN NOT MATCHED AND temp_table.in_stock = true THEN
+      INSERT (api_index, overrides, store_id)
+      VALUES (temp_table.api_index, temp_table.overrides, temp_table.store_id)
+    WHEN NOT MATCHED AND temp_table.in_stock = false THEN
+      DO NOTHING
+    `
+  )
+
+  console.log(queryStr)
+ await sql.query(queryStr);
+ 
+  const result = req.body.filter(item => item.inStock === true)
+
+  res.status(200).send(result);
+})
