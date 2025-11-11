@@ -1,5 +1,4 @@
 import React, { createContext, useEffect, useContext, useState } from 'react';
-import { dummyItems } from './assets/assets';
 import axios from 'axios';
 
 
@@ -55,6 +54,16 @@ export const StoreProvider = ({ children }) => {
     fetchStoreLayout()
   }, []);
 
+  const updateStoreCatalog = async(newCatalog) =>{
+    try{
+        const storeId = '1';
+        await axios.put(`http://localhost:3001/saveStoreCatalog/${storeId}`, newCatalog)
+        
+    }catch(err){
+        console.log(err);
+    }
+  }
+
   useEffect(()=>{
     setStockedItemList(stockedItemInfo.map((item) => {
                     console.log("checking index:", item)
@@ -66,7 +75,7 @@ export const StoreProvider = ({ children }) => {
     const value = {
         itemCatalog, setItemCatalog, isLoadingCatalog, setIsLoadingCatalog,
         catalogError, setCatalogError, stockedItemInfo, setStockedItemInfo,
-        stockedItemList, setStockedItemList, storeLayout
+        stockedItemList, setStockedItemList, storeLayout, updateStoreCatalog
     }
     return (
         <StoreContext.Provider value={value}>

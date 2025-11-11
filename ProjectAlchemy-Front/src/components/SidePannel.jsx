@@ -3,8 +3,8 @@ import {useState, useEffect, useRef} from 'react'
 import { useStoreContext } from '../context'
 import ItemCardSimple from './ItemCardSimple';
 
-function SidePannel({items}){
-    const {stockedItems, stockedItemList, itemCatalog} = useStoreContext();
+function SidePannel(){
+    const {stockedItemList, itemCatalog, updateStoreCatalog} = useStoreContext();
     console.log('stocklist inpannel: ', stockedItemList)
 
     const sidePanelRef = useRef(null);
@@ -46,6 +46,10 @@ function SidePannel({items}){
         }
     }, [sidePanelState, TogglePanel])
 
+    const UpdateCatalog = () => {
+        const newCatalog = itemCatalog.filter(item => stockedItemList.includes(item.id))
+        updateStoreCatalog(newCatalog)
+    }
 
     return(
         <>
@@ -61,7 +65,7 @@ function SidePannel({items}){
         <div id="sidePanel" ref={sidePanelRef} className="sidePanel">
             <div className="sidepanel header">
                 <h1 className="font-bold">Item List</h1>
-                <button className='sideButton'>Update Catalog</button>
+                <button className='sideButton' onClick={UpdateCatalog}>Update Catalog</button>
             </div>
             <div className='sidepanel catalog'>
                 <ol className=''>
