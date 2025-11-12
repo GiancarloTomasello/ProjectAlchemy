@@ -15,6 +15,8 @@ export const StoreProvider = ({ children }) => {
 
     const [storeLayout, setStoreLayout] = useState([]);
 
+    const [shopDisplayPage, setShopDisplayPage] = useState('preview');
+
     useEffect(() => {
     //Make GET request to fetch all D&D items
     axios
@@ -75,7 +77,8 @@ export const StoreProvider = ({ children }) => {
     const value = {
         itemCatalog, setItemCatalog, isLoadingCatalog, setIsLoadingCatalog,
         catalogError, setCatalogError, stockedItemInfo, setStockedItemInfo,
-        stockedItemList, setStockedItemList, storeLayout, updateStoreCatalog
+        stockedItemList, setStockedItemList, storeLayout, updateStoreCatalog,
+        shopDisplayPage, setShopDisplayPage
     }
     return (
         <StoreContext.Provider value={value}>

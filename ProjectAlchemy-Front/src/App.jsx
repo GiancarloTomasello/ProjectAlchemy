@@ -4,6 +4,8 @@ import Card from "./components/Card.jsx"
 import Banner from './components/Banner.jsx'
 import SidePannel from './components/SidePannel.jsx'
 import { useStoreContext } from './context.jsx'
+import EditPanel from './components/EditPanel.jsx'
+
 
 var items = [
   {'name': 'a', 'cost': 100, 'rarity': 'Common', 'description': 'test test', 'instock': true},
@@ -21,10 +23,27 @@ window.onload = () => {
 
 }
 
+function PageLogic({currPage}){
+  switch(currPage){
+    case 'Preview':
+        return (<>
+        <div>
+
+        </div>
+        </>)
+    default:
+      return (<>
+      <h1>TEST PAGE</h1>
+      </>)
+  }
+}
+
 
 function App() {
 
-  const {itemCatalog, stockedItemList, isLoadingCatalog, catalogError, storeLayout} = useStoreContext();
+  const {itemCatalog, stockedItemList, 
+    isLoadingCatalog, catalogError, 
+    storeLayout, shopDisplayPage} = useStoreContext();
 
 
   const [dynamicShopComponent, setDynamicShopComponent] = useState([]);
@@ -44,14 +63,16 @@ function App() {
   console.log(items[0])
   return (
     <>
-      <SidePannel/>
       {/* <Banner/>
       <div>
-        <h1>Items</h1>
+      <h1>Items</h1>
       </div>
       <div>
       </div> */}
       {/* {stockedItems.filter((item) => item.inStock).map((item) => <Card item={item} key={item.id}/>)} */}
+      <EditPanel/>
+      <PageLogic currPage={shopDisplayPage}/>
+      <SidePannel/>
       <h1>DB ITEMS</h1>
       <ul id='dbitems' className="flex">
         {(!isLoadingCatalog && !catalogError) ?

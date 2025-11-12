@@ -91,6 +91,7 @@
 .sidePanel .sideButton{
   background-color: gray;
   border-radius: 10px;
+  right: 25%;
 }
 
 .sidePanel .sideButton:hover{
@@ -113,4 +114,18 @@
   font-weight: bold;
 }
 
+.editPanel{
+  background-color: blueviolet;
+  display: flex;
+  gap:5px;
+}
+
+.editPanel button{
+  background-color: blueviolet;;
+  border-radius: 5px;
+}
+
+.editPanel button:hover{
+  background-color: rgb(72, 9, 130);
+}
 

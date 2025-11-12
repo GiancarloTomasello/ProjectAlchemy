@@ -16,10 +16,12 @@ function SidePannel(){
                 if(sidePanelState){
                     console.log("Hide Panel")
                     sidePanelRef.current.style.transform="translate(100%)"
+                    //buttonRef.current.style.right="1/4"
                     setSidePanelState(false);
                 }else{
                     console.log("show panel")
                     sidePanelRef.current.style.transform="translate(0%)"
+                    //buttonRef.current.style.right="0"
                     setSidePanelState(true);
                 }
             }else{
@@ -54,15 +56,11 @@ function SidePannel(){
     return(
         <>
         <button ref={buttonRef} id="sidePannelButton" onClick={TogglePanel}
-            className="fixed z-20 left-5 rounded-md bg-white/10 px-2.5 py-1.5 hover:bg-white/20">
+            className="fixed z-20 right-1/4 left-auto rounded-md bg-white/10 px-2.5 py-1.5 hover:bg-white/20 -transform-x-10">
                 Testing Side
         </button>
-
-        {/* <div className='fixed right-0 left-auto top-0 flex gap-5 z-2 '>
-            <h1>TESTING</h1>
-            <button>click me</button>
-        </div> */}
         <div id="sidePanel" ref={sidePanelRef} className="sidePanel">
+
             <div className="sidepanel header">
                 <h1 className="font-bold">Item List</h1>
                 <button className='sideButton' onClick={UpdateCatalog}>Update Catalog</button>
