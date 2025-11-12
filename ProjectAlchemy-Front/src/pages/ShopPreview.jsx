@@ -4,7 +4,7 @@ import Card from "../components/Card.jsx"
 import Banner from '../components/Banner.jsx'
 import SidePannel from '../components/SidePannel.jsx'
 import { useStoreContext } from '../context.jsx'
-import EditPanel from '../components/EditPanel.jsx'
+import EditNavBar from '../components/EditNavBar.jsx'
 
 
 var items = [
@@ -70,7 +70,7 @@ function ShopPreview() {
       <div>
       </div> */}
       {/* {stockedItems.filter((item) => item.inStock).map((item) => <Card item={item} key={item.id}/>)} */}
-      <EditPanel/>
+      <EditNavBar/>
       <PageLogic currPage={shopDisplayPage}/>
       <SidePannel/>
       <h1>DB ITEMS</h1>

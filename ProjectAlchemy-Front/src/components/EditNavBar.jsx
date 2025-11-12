@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
 import { useStoreContext } from '../context'
+import { useNavigate } from 'react-router-dom'
 
-function EditPanel(){
+function EditNavBar(){
     const {shopDisplayPage, setShopDisplayPage} = useStoreContext();
     // previewButtonElement = document.getElementById('previewButton');
-    
+    const navigate = useNavigate();
 
     function changePageDisplay(newPageName){
         console.log("CHANGE PAGE DISPLAY")
@@ -15,12 +16,15 @@ function EditPanel(){
     useEffect(() => {
         function PreviewListener(e){
             changePageDisplay("Preview")
+            navigate('/Preview')
         }
         function LayoutListener(e){
             changePageDisplay("Layout")
+            navigate('/EditLayout')
         }
         function CatalogListener(e){
             changePageDisplay("Catalog")
+            navigate('/EditCatalog')
         }
 
         const previewButtonElement = document.getElementById('previewButton');
@@ -41,12 +45,12 @@ function EditPanel(){
     return(
         <>
         <div className="editPanel">
-            <button id='previewButton'>EDITS A</button>
-            <button id='layoutButton'>EDITS B</button>
-            <button id='catalogButton'>EDITS C</button>
+            <button id='previewButton'>Store Preview</button>
+            <button id='layoutButton'>Edit Layout</button>
+            <button id='catalogButton'>Edit Catalog</button>
         </div>
         </>
     );
 }
 
-export default EditPanel
+export default EditNavBar
