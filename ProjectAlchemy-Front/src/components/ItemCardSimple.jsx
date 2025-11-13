@@ -5,13 +5,27 @@ function ItemCardSimple({item}){
 
 
     function ToggleInStock(item){
+        console.log("item selected: ", item)
+        const stockedItem = stockedItemList.find((stockItem) => stockItem.api_index === item.id)
 
-        if(stockedItemList.includes(item.id)){
-            const newList = stockedItemList.filter(aItem => aItem != item.id);
+        if(stockedItem){
+            const newList = stockedItemList.map(stockItem => {
+                if(stockItem.api_index===item.id && stockItem.inStock){
+                    stockItem.inStock = false
+                }else if (stockItem.api_index===item.id && !stockItem.inStock){
+                    stockItem.inStock = true
+                }
+                return stockItem
+            });
             setStockedItemList(newList);
         }else{
             console.log(stockedItemList);
-            setStockedItemList([...stockedItemList, item.id])
+            const newObject = {
+                "api_index" : "",
+                "store-id": 1,
+                "overrides": {}
+            }
+            setStockedItemList([...stockedItemList, newObject])
         }
 
     }
@@ -24,7 +38,8 @@ function ItemCardSimple({item}){
                 <div className="flex-1/3">
                     <img className="card-img" src="https://placehold.co/150" alt="item img"></img>
                     <label htmlFor="itemInStock">Stock Item?</label>
-                    <input type="checkbox" id="itemInStock" defaultChecked={stockedItemList.includes(item.id)} onChange={() => ToggleInStock(item)}/>
+                    <input type="checkbox" id="itemInStock" defaultChecked={stockedItemList.some((stockItem) => stockItem.api_index === item.id)} 
+                    onChange={() => ToggleInStock(item)}/>
                     {/* <input type="checkbox" id="itemInStock" onChange={() => ToggleInStock(item)}/> */}
                 </div>
                 <div className="flex-2/3">

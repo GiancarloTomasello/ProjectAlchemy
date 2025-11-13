@@ -59,7 +59,7 @@ function ShopPreview() {
       <h1>DB ITEMS</h1>
       <ul id='dbitems' className="flex">
         {(!isLoadingCatalog && !catalogError) ?
-          itemCatalog.filter(item => stockedItemList.includes(item.id))
+          itemCatalog.filter(item => stockedItemList.some((stockitem) => stockitem.api_index === item.id && stockitem.inStock))
                       .map(item => <li><Card {...item} key={item.id}/></li>):
                         <p>ERROR</p>}
       </ul>

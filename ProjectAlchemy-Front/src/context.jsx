@@ -36,7 +36,11 @@ export const StoreProvider = ({ children }) => {
         try{
             const response = await axios.get('http://localhost:3001/getStock/1')
             console.log("Response "+response.data)
-            setStockedItemInfo(response.data)
+            
+            const storeStock = response.data.map(item =>{
+                return {...item, 'inStock':true}
+            })
+            setStockedItemInfo(storeStock)
         }catch(err){
             console.log(err);
         }
@@ -69,7 +73,7 @@ export const StoreProvider = ({ children }) => {
   useEffect(()=>{
     setStockedItemList(stockedItemInfo.map((item) => {
                     console.log("checking index:", item)
-                    return item.api_index}
+                    return item}
                 ))
   }, [stockedItemInfo])
 
