@@ -161,3 +161,21 @@ app.put('/saveStoreCatalog/:id', async (req,res) =>{
 
   res.status(200).send(result);
 })
+
+app.put('/saveStoreLayout/:id', async (req,res)=> {
+  
+  const storeId = parseInt(req.params.id);
+
+  const query = `
+    UPDATE storefront
+      SET store_layout = '${JSON.stringify(req.body)}'::JSON
+      where id= ${storeId}
+  `
+
+  console.log("body= ", JSON.stringify(req.body))
+  console.log(query)
+
+  const result = await sql.query(query);
+
+  res.status(200).send(result);
+})
