@@ -4,15 +4,6 @@ function ItemCardSimple({item}){
     const {stockedItemList, setStockedItemList} = useStoreContext();
 
 
-    // function clickHandler(e){
-    //     e.preventDefault()
-    // }
-
-    // document.addEventListener("click", clickHandler)
-
-    // const ToggleInStock((inStock)=>{
-    //     inStock = !inStock
-    // })
     function ToggleInStock(item){
 
         if(stockedItemList.includes(item.id)){

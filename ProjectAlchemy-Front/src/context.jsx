@@ -77,8 +77,8 @@ export const StoreProvider = ({ children }) => {
     const value = {
         itemCatalog, setItemCatalog, isLoadingCatalog, setIsLoadingCatalog,
         catalogError, setCatalogError, stockedItemInfo, setStockedItemInfo,
-        stockedItemList, setStockedItemList, storeLayout, updateStoreCatalog,
-        shopDisplayPage, setShopDisplayPage
+        stockedItemList, setStockedItemList, storeLayout, setStoreLayout,
+        updateStoreCatalog, shopDisplayPage, setShopDisplayPage
     }
     return (
         <StoreContext.Provider value={value}>

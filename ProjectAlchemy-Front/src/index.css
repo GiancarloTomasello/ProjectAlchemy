@@ -129,3 +129,32 @@
   background-color: rgb(72, 9, 130);
 }
 
+.editComponent{
+  display: flex;
+  flex-direction: row;
+  gap:5px;
+  max-width: 50%;
+  width: 50%;
+}
+
+.editComponent > button{
+  background-color: grey;
+  border-radius: 5px;
+  width: 20%;
+  max-width: 20%;
+}
+
+.editComponent > button:hover{
+  background-color: rgb(57, 57, 57)
+
+}
+
+.SaveButton {
+  background-color:burlywood;
+  color: black;
+  align-items: center;
+}
+
+.SaveButton:hover{
+  background-color:rgb(128, 107, 79);
+}

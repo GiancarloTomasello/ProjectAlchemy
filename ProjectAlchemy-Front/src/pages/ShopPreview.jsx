@@ -23,22 +23,6 @@ window.onload = () => {
 
 }
 
-function PageLogic({currPage}){
-  switch(currPage){
-    case 'Preview':
-        return (<>
-        <div>
-
-        </div>
-        </>)
-    default:
-      return (<>
-      <h1>TEST PAGE</h1>
-      </>)
-  }
-}
-
-
 function ShopPreview() {
 
   const {itemCatalog, stockedItemList, 
@@ -71,7 +55,6 @@ function ShopPreview() {
       </div> */}
       {/* {stockedItems.filter((item) => item.inStock).map((item) => <Card item={item} key={item.id}/>)} */}
       <EditNavBar/>
-      <PageLogic currPage={shopDisplayPage}/>
       <SidePannel/>
       <h1>DB ITEMS</h1>
       <ul id='dbitems' className="flex">
