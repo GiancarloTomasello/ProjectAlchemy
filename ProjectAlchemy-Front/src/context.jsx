@@ -62,6 +62,7 @@ export const StoreProvider = ({ children }) => {
 
   const updateStoreCatalog = async(newCatalog) =>{
     try{
+        console.log(newCatalog);
         const storeId = '1';
         await axios.put(`http://localhost:3001/saveStoreCatalog/${storeId}`, newCatalog)
         

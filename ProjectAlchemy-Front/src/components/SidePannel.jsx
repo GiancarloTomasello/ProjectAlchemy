@@ -49,8 +49,7 @@ function SidePannel(){
     }, [sidePanelState, TogglePanel])
 
     const UpdateCatalog = () => {
-        const newCatalog = itemCatalog.filter(item => stockedItemList.includes(item.id))
-        updateStoreCatalog(newCatalog)
+        updateStoreCatalog(stockedItemList)
     }
 
     return(

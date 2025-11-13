@@ -121,7 +121,7 @@ app.get('/getStoreLayout/:id', async (req, res) =>{
 
 app.put('/saveStoreCatalog/:id', async (req,res) =>{
   const storeID = parseInt(req.params.id)
-  console.log(req.body[0])
+  console.log("req body:", req.body)
 
   queryStr = (
     `MERGE INTO storetoitem sti
