@@ -20,10 +20,12 @@ function ItemCardSimple({item}){
             setStockedItemList(newList);
         }else{
             console.log(stockedItemList);
+            console.log(item.id)
             const newObject = {
-                "api_index" : "",
-                "store-id": 1,
-                "overrides": {}
+                "api_index" : item.id,
+                "store_id": 1,
+                "overrides": {},
+                "inStock": true
             }
             setStockedItemList([...stockedItemList, newObject])
         }

@@ -71,6 +71,16 @@ export const StoreProvider = ({ children }) => {
     }
   }
 
+  const updateStoreLayout = async() => {
+    try{
+        console.log(storeLayout)
+        const storeId = '1'
+        await axios.put(`http://localhost:3001/saveStoreLayout/${storeId}`, storeLayout)
+    }catch(err){
+        console.log(err)
+    }
+  }
+
   useEffect(()=>{
     setStockedItemList(stockedItemInfo.map((item) => {
                     console.log("checking index:", item)
@@ -83,7 +93,7 @@ export const StoreProvider = ({ children }) => {
         itemCatalog, setItemCatalog, isLoadingCatalog, setIsLoadingCatalog,
         catalogError, setCatalogError, stockedItemInfo, setStockedItemInfo,
         stockedItemList, setStockedItemList, storeLayout, setStoreLayout,
-        updateStoreCatalog, shopDisplayPage, setShopDisplayPage
+        updateStoreCatalog, shopDisplayPage, setShopDisplayPage, updateStoreLayout
     }
     return (
         <StoreContext.Provider value={value}>

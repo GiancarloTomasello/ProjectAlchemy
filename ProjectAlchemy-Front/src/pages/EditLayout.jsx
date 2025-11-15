@@ -4,7 +4,7 @@ import { useStoreContext } from '../context.jsx'
 import ComponentDisplayCard from '../components/ComponentDisplayCard.jsx';
 
 function EditLayout(){
-      const {storeLayout, setStoreLayout} = useStoreContext();
+      const {storeLayout, updateStoreLayout} = useStoreContext();
       const [componentList, setComponentList ]= useState([]);
 
       useEffect(()=>{
@@ -19,6 +19,7 @@ function EditLayout(){
 
       function saveLayoutChanges(){
         console.log('Call update on backend')
+        updateStoreLayout()
       }
       
 
