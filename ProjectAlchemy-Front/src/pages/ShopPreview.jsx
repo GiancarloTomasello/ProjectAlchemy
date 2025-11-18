@@ -27,7 +27,7 @@ function ShopPreview() {
 
   const {itemCatalog, stockedItemList, 
     isLoadingCatalog, catalogError, 
-    storeLayout, shopDisplayPage} = useStoreContext();
+    storeLayout} = useStoreContext();
 
 
   const [dynamicShopComponent, setDynamicShopComponent] = useState([]);
@@ -47,14 +47,6 @@ function ShopPreview() {
   console.log(items[0])
   return (
     <>
-      {/* <Banner/>
-      <div>
-      <h1>Items</h1>
-      </div>
-      <div>
-      </div> */}
-      {/* {stockedItems.filter((item) => item.inStock).map((item) => <Card item={item} key={item.id}/>)} */}
-      <EditNavBar/>
       <SidePannel/>
       <h1>DB ITEMS</h1>
       <ul id='dbitems' className="flex">

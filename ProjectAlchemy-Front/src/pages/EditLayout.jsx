@@ -25,7 +25,6 @@ function EditLayout(){
 
     return(
         <>
-            <EditNavBar/>
             <h1 className='text-center'>Edit Current Web Components</h1>
             <div className='flex flex-row justify-around'>
                 <div className='basis-1/2'>
