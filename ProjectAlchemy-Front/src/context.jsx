@@ -2,6 +2,7 @@ import React, { createContext, useEffect, useContext, useState } from 'react';
 import axios from 'axios';
 import Card from './components/Card';
 import Banner from './components/Banner';
+import ShopCard from './components/ShopCard';
 
 export const StoreContext = createContext();
 
@@ -21,6 +22,7 @@ export const StoreProvider = ({ children }) => {
     const componentMap ={
     'Card': Card,
     'Banner': Banner,
+    'ShopCard': ShopCard
     };
 
     useEffect(() => {
