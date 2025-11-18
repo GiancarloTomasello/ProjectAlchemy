@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useContext, useState } from 'react';
 import axios from 'axios';
-
+import Card from './components/Card';
+import Banner from './components/Banner';
 
 export const StoreContext = createContext();
 
@@ -16,6 +17,11 @@ export const StoreProvider = ({ children }) => {
     const [storeLayout, setStoreLayout] = useState([]);
 
     const [shopDisplayPage, setShopDisplayPage] = useState('preview');
+
+    const componentMap ={
+    'Card': Card,
+    'Banner': Banner,
+    };
 
     useEffect(() => {
     //Make GET request to fetch all D&D items
@@ -93,7 +99,8 @@ export const StoreProvider = ({ children }) => {
         itemCatalog, setItemCatalog, isLoadingCatalog, setIsLoadingCatalog,
         catalogError, setCatalogError, stockedItemInfo, setStockedItemInfo,
         stockedItemList, setStockedItemList, storeLayout, setStoreLayout,
-        updateStoreCatalog, shopDisplayPage, setShopDisplayPage, updateStoreLayout
+        updateStoreCatalog, shopDisplayPage, setShopDisplayPage, updateStoreLayout,
+        componentMap
     }
     return (
         <StoreContext.Provider value={value}>

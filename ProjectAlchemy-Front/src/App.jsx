@@ -4,6 +4,7 @@ import {Routes, Route} from 'react-router-dom'
 import ShopPreview from './pages/ShopPreview'
 import EditLayout from './pages/EditLayout'
 import ShopView from './pages/ShopView'
+import ShopViewPlayer from './pages/ShopViewPlayer.jsx'
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
           <Route path="EditCatalog" element={<ShopPreview/>}/>
         </Route>
         <Route path="/shop/:storeid" element={<ShopPreview/>}/>
+        <Route path="/player/store/:storeid" element={<ShopViewPlayer/>}/>
      </Routes>
     </>
   )
