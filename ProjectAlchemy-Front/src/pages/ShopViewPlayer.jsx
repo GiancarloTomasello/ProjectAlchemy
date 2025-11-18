@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useStoreContext } from "../context";
+import FullCatalogPanel from "../components/FullCatalogPanel";
 
 function ShopViewPlayer(){
     const {componentMap, storeLayout} = useStoreContext();

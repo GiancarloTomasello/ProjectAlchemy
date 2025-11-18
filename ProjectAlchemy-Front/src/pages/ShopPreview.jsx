@@ -13,11 +13,6 @@ var items = [
   {'name': 'c', 'cost': 509, 'rarity': 'Rare', 'description': 'test test', 'instock': true},
 ];
 
-const componentMap ={
-  'Card': Card,
-  'Banner': Banner,
-};
-
 //Run when window has loaded
 window.onload = () => {
 
@@ -27,7 +22,7 @@ function ShopPreview() {
 
   const {itemCatalog, stockedItemList, 
     isLoadingCatalog, catalogError, 
-    storeLayout} = useStoreContext();
+    storeLayout, componentMap} = useStoreContext();
 
 
   const [dynamicShopComponent, setDynamicShopComponent] = useState([]);

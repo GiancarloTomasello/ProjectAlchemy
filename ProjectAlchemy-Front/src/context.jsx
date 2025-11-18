@@ -3,6 +3,7 @@ import axios from 'axios';
 import Card from './components/Card';
 import Banner from './components/Banner';
 import ShopCard from './components/ShopCard';
+import FullCatalogPanel from './components/FullCatalogPanel';
 
 export const StoreContext = createContext();
 
@@ -22,7 +23,8 @@ export const StoreProvider = ({ children }) => {
     const componentMap ={
     'Card': Card,
     'Banner': Banner,
-    'ShopCard': ShopCard
+    'ShopCard': ShopCard,
+    'FullCatalog': FullCatalogPanel
     };
 
     useEffect(() => {
