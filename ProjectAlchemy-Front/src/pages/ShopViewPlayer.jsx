@@ -1,6 +1,7 @@
 import { useState, useEffect} from "react";
 import { useStoreContext } from "../context";
 import ShopNavBar from "../components/ShopNavBar";
+import {Toaster} from 'react-hot-toast'
 
 
 function ShopViewPlayer(){
@@ -32,6 +33,7 @@ function ShopViewPlayer(){
         <div id='dynamicShop'>
             {dynamicShopComponent ? dynamicShopComponent : <p>customShopLayoutNull</p>}
         </div>
+        <Toaster/>
         </>
     )
 }
