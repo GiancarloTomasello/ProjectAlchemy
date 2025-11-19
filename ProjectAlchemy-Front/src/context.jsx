@@ -19,6 +19,7 @@ export const StoreProvider = ({ children }) => {
     const [storeLayout, setStoreLayout] = useState([]);
 
     const [shopDisplayPage, setShopDisplayPage] = useState('preview');
+    const [shoppingCart, setShoppingCart] = useState([]);
 
     const componentMap ={
     'Card': Card,
@@ -104,7 +105,7 @@ export const StoreProvider = ({ children }) => {
         catalogError, setCatalogError, stockedItemInfo, setStockedItemInfo,
         stockedItemList, setStockedItemList, storeLayout, setStoreLayout,
         updateStoreCatalog, shopDisplayPage, setShopDisplayPage, updateStoreLayout,
-        componentMap
+        componentMap, shoppingCart, setShoppingCart
     }
     return (
         <StoreContext.Provider value={value}>

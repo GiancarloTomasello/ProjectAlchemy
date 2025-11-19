@@ -129,6 +129,34 @@
   background-color: rgb(72, 9, 130);
 }
 
+.navPanel{
+  background-color: palegoldenrod;
+  /* display: flex; */
+  gap:5px;
+  padding: 5px;
+  max-height: 15%;
+  height: 15%;
+}
+
+.navPanel button {
+  background-color: rgb(229, 98, 16);
+  border-radius:5px;
+  border: 5px;
+}
+
+.navPanel button:hover {
+  background-color: rgb(130, 56, 11);
+}
+
+/* .navPanel img {
+  border: 5px violet;
+} */
+
+.navPanel .shoppingCart{
+  position: relative;
+  left: 95%;
+}
+
 .editComponent{
   display: flex;
   flex-direction: row;

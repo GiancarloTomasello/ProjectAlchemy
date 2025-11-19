@@ -1,11 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect} from "react";
 import { useStoreContext } from "../context";
-import FullCatalogPanel from "../components/FullCatalogPanel";
+import ShopNavBar from "../components/ShopNavBar";
+
 
 function ShopViewPlayer(){
+    if(!useStoreContext()){
+      console.log('PROBLEM WITH STORE CONTEXT')
+    }
     const {componentMap, storeLayout} = useStoreContext();
     const [dynamicShopComponent, setDynamicShopComponent] = useState([]);
     
+
     useEffect(()=>{
         const shopComponents = storeLayout.map((item,index) =>{
           console.log(`${index}, ${item.name}`)
@@ -23,6 +28,7 @@ function ShopViewPlayer(){
 
     return(
         <>
+        <ShopNavBar id='navBar'/>
         <div id='dynamicShop'>
             {dynamicShopComponent ? dynamicShopComponent : <p>customShopLayoutNull</p>}
         </div>

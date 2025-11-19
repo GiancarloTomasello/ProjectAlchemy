@@ -13,6 +13,10 @@ function FullCatalogPanel(){
 
     console.log('playerChecking store:', itemCatalog[0])
 
+    function AddToCart(){
+        console.log('Add to cart')
+    }
+
     useEffect(() => {
 
         const catalogDisplay = itemCatalog.filter(

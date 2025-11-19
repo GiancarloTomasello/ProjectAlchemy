@@ -1,4 +1,19 @@
+import { useStoreContext } from "../context"
+
 function ShopCard(props){
+    const {shoppingCart, setShoppingCart} = useStoreContext();
+
+    function AddToCart(){
+        const inCart = shoppingCart.find(cartItem => cartItem.name === props.name)
+        if(inCart){
+            console.log(`${props.name} already in cart`)
+        }else{
+            const newCart = [...shoppingCart, props]
+            setShoppingCart(newCart)
+            console.log("new shopping cart:", shoppingCart)
+        }
+    }
+
     return(
         <div className="card">
             <img className="card-img" src="https://placehold.co/150" alt="item img"></img>
@@ -10,7 +25,7 @@ function ShopCard(props){
                 <p>|</p>
                 <p>{props.rarity}</p>
             </div>
-            <button>Add To Cart</button>
+            <button onClick={AddToCart}>Add To Cart</button>
         </div>
     )
 }
