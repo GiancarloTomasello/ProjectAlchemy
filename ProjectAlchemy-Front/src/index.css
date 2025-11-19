@@ -70,6 +70,9 @@
 
 .catalog{
   margin:2;
+  max-height: 80%;
+  height: 80%;
+  overflow-y: scroll;
 }
 
 
@@ -81,7 +84,6 @@
   height: 100%;
   right: 0;
   position: fixed;
-  overflow-y: scroll;
   transform: translateX(100%);
   color:black;
   /* transition? */
