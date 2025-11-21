@@ -179,3 +179,45 @@ app.put('/saveStoreLayout/:id', async (req,res)=> {
 
   res.status(200).send(result);
 })
+
+app.get('/getStoresByUser/:id', async (req, res) => {
+  const userId = parseInt(req.params.id);
+  console.log(userId)
+
+  const query = `
+    Select *
+    FROM storefront
+    WHERE owner_id = ${userId}
+  `
+
+  console.log(query)
+
+  try{    
+    const result = await sql.query(query);
+    res.status(200).send(result)
+  }catch(e){
+    console.error('Error retreiving Stores:', e)
+    res.status(500).json({error: 'Failed to retrieve Stores from user id' })
+  }
+})
+
+app.get('/getUserIdByName/:username', async (req, res) => {
+  const userName = req.params.username
+  console.log(userName)
+
+  const query = `
+    Select id
+    FROM users
+    WHERE username = '${userName}'
+  `
+
+  console.log(query)
+
+  try{    
+    const result = await sql.query(query);
+    res.status(200).send(result)
+  }catch(e){
+    console.error('Error retreiving Stores:', e)
+    res.status(500).json({error: 'Failed to retrieve Stores from user id' })
+  }
+})
