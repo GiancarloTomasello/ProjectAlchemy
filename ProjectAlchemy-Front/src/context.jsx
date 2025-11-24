@@ -57,32 +57,35 @@ export const StoreProvider = ({ children }) => {
         }
     }
 
-    const fetchStoreLayout = async() =>{
+    
+    fetchCatalog()
+    fetchStockedItems()
+    //fetchStoreLayout()
+}, []);
+
+    const fetchStoreLayout = async(storeId) =>{
+        //const storeId = 1;
+        console.log("GET STORE LAYOUT ", storeId)
         try{
-            const response = await axios.get('http://localhost:3001/getStoreLayout/1')
+            const response = await axios.get(`http://localhost:3001/getStoreLayout/${storeId}`)
             setStoreLayout(response.data)
         }catch(err){
             console.log(err);
         }
     }
 
-    fetchCatalog()
-    fetchStockedItems()
-    fetchStoreLayout()
-  }, []);
-
-  const updateStoreCatalog = async(newCatalog) =>{
-    try{
-        console.log(newCatalog);
-        const storeId = '1';
-        await axios.put(`http://localhost:3001/saveStoreCatalog/${storeId}`, newCatalog)
-        
-    }catch(err){
-        console.log(err);
+    const updateStoreCatalog = async(newCatalog) =>{
+        try{
+            console.log(newCatalog);
+            const storeId = '1';
+            await axios.put(`http://localhost:3001/saveStoreCatalog/${storeId}`, newCatalog)
+            
+        }catch(err){
+            console.log(err);
+        }
     }
-  }
 
-  const updateStoreLayout = async() => {
+  const updateStoreLayout = async(storeId) => {
     try{
         console.log(storeLayout)
         const storeId = '1'
@@ -115,7 +118,7 @@ export const StoreProvider = ({ children }) => {
         catalogError, setCatalogError, stockedItemInfo, setStockedItemInfo,
         stockedItemList, setStockedItemList, storeLayout, setStoreLayout,
         updateStoreCatalog, shopDisplayPage, setShopDisplayPage, updateStoreLayout,
-        componentMap, shoppingCart, setShoppingCart, createNewStorefront
+        componentMap, shoppingCart, setShoppingCart, createNewStorefront, fetchStoreLayout
     }
     return (
         <StoreContext.Provider value={value}>

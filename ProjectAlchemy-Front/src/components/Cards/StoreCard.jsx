@@ -1,7 +1,16 @@
-function StoreCard({name, welcome, id}){
+import { useNavigate } from "react-router-dom";
+import { useStoreContext } from "../../context";
 
-    function storeSelected(){
+function StoreCard({name, welcome, id}){
+    const navigate = useNavigate()
+    const {fetchStoreLayout} = useStoreContext();
+
+    const storeSelected = async () =>{
         console.log(`you clicked on ${id}, ${name}`)
+        //Get store id and navigate to it
+        await fetchStoreLayout(id)
+
+        navigate(`/${id}/Preview`, {state: {storeId: id}})
     }
 
     return(

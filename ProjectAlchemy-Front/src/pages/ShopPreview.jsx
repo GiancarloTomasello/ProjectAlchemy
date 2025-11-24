@@ -5,6 +5,7 @@ import Banner from '../components/Banner.jsx'
 import SidePannel from '../components/SidePannel.jsx'
 import { useStoreContext } from '../context.jsx'
 import EditNavBar from '../components/EditNavBar.jsx'
+import {useLocation} from 'react-router-dom'
 
 
 var items = [
@@ -28,18 +29,18 @@ function ShopPreview() {
   const [dynamicShopComponent, setDynamicShopComponent] = useState([]);
 
   useEffect(()=>{
+    console.log("Store Layout: ", storeLayout)
     const shopComponents = storeLayout.map((item,index) =>{
-      console.log(`${index}, ${item.name}`)
+      //console.log(`${index}, ${item.name}`)
       const DynamicComponent = componentMap[item.name]
       const newComponent = DynamicComponent ? <DynamicComponent {...item.props} key={index}/> : <p>Component Not found</p>
       return newComponent
     })
-    console.log(shopComponents)
 
     setDynamicShopComponent(shopComponents)
   }, [setDynamicShopComponent, storeLayout])
 
-  console.log(items[0])
+  //console.log(items[0])
   return (
     <>
       <SidePannel/>
