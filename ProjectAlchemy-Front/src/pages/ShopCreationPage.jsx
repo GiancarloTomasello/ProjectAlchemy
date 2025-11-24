@@ -3,6 +3,7 @@ import StoreCard from "../components/Cards/StoreCard"
 import axios from 'axios';
 import Modal from 'react-modal';
 import ReactModal from "react-modal";
+import { useStoreContext } from "../context";
 
 
 function ShopCreationPage(){
@@ -13,6 +14,7 @@ function ShopCreationPage(){
     const [modalIsOpen, SetModalIsOpen] = useState(false);
     const [newShopForm, setNewShopForm] = useState(null);
 
+    const {createNewStorefront} = useStoreContext();
 
 
     const customStyles = {
@@ -27,23 +29,53 @@ function ShopCreationPage(){
         },
     };
 
-    function createShop(e){
+    const createShop = async (e) =>{
         e.preventDefault();
-        console.log('create a shop')
+
+
+        const formData = new FormData(e.target)
+        const storeDetail = {
+            shopname: formData.get('shopname'),
+            welcomeMessage: formData.get('welcomeMessage'),
+            campaignId: formData.get('campaignId'),
+            isPublic: (formData.get('isPublic')=='on'? true : false),
+            storeLayout: [
+                {
+                    "name": "Banner",
+                    "props": {
+                    "name": formData.get('shopname'),
+                    "img": null
+                    }
+                },
+                {
+                    "name": "FullCatalog",
+                    "props": {}
+                }
+            ]
+        }
+
+        // console.log("ispublic", storeDetail)
+        await createNewStorefront(storeDetail)
+
+        await getStoreList()
+        closeModal()
     }
 
     //When the page load attempt to retreive the full list of shops from backend
 
-    useEffect(()=>{
-        const getStoreList = async () => {
-            try{
-                const response = await axios.get('http://localhost:3001/getStoresByUser/1')
-                console.log("StoreList Response:",response)
-                setCurrentShops(response.data)
-            }catch(err){
-                console.error(err.message)
-            }
+    const getStoreList = async () => {
+        try{
+            //HARD CODE USER ID
+            const userId = 1
+            const response = await axios.get(`http://localhost:3001/getStoresByUser/${userId}`)
+            console.log("StoreList Response:",response)
+            setCurrentShops(response.data)
+        }catch(err){
+            console.error(err.message)
         }
+    }
+
+    useEffect(()=>{
 
         getStoreList()
     }, [])
@@ -62,6 +94,7 @@ function ShopCreationPage(){
         <div>
             <h1 id="title">Shop Creation Page</h1>
             <button onClick={openModal}>Create New Shop</button>
+            <button onClick={getStoreList}>Refresh Shops</button>
             <Modal
               id="modal"
               contentLabel="NewPagePopup"
@@ -73,18 +106,18 @@ function ShopCreationPage(){
                 <form id="newShopForm" className="newShopModal" onSubmit={createShop}>
                     <div>
                         <label>Shop name</label>
-                        <input id="shopName" type="text" required></input>
+                        <input id="shopName" type="text" name="shopname" required></input>
                     </div>
                     <div>
                         <label>Welcome Message</label>
-                        <input id="welcomeMessage" type="text" required></input>
+                        <input id="welcomeMessage" type="text" name="welcomeMessage" required></input>
                     </div>
                     <div>
                         <label>Campaign Tag</label>
                     </div>
                     <div>
                         <label>Is shop public</label>
-                        <input id="isPublic" type="checkbox"></input>
+                        <input id="isPublic" type="checkbox" name="isPublic"></input>
                     </div>
                     <button>Create</button>
                 </form>

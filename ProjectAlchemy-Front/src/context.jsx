@@ -92,6 +92,16 @@ export const StoreProvider = ({ children }) => {
     }
   }
 
+  const createNewStorefront = async(storedetail) => {
+    try{
+        const userId = 'test'
+        storedetail.userId = userId
+        await axios.put('http://localhost:3001/createShop', storedetail)
+    }catch(err){
+        console.log(err)
+    }
+  }
+
   useEffect(()=>{
     setStockedItemList(stockedItemInfo.map((item) => {
                     console.log("checking index:", item)
@@ -105,7 +115,7 @@ export const StoreProvider = ({ children }) => {
         catalogError, setCatalogError, stockedItemInfo, setStockedItemInfo,
         stockedItemList, setStockedItemList, storeLayout, setStoreLayout,
         updateStoreCatalog, shopDisplayPage, setShopDisplayPage, updateStoreLayout,
-        componentMap, shoppingCart, setShoppingCart
+        componentMap, shoppingCart, setShoppingCart, createNewStorefront
     }
     return (
         <StoreContext.Provider value={value}>
