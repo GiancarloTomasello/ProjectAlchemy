@@ -221,3 +221,22 @@ app.get('/getUserIdByName/:username', async (req, res) => {
     res.status(500).json({error: 'Failed to retrieve Stores from user id' })
   }
 })
+
+app.put('/createShop', async(req,res) =>{
+  console.log(req.body.shopname)
+
+  const query = `
+    INSERT into storefront  (store_name, welcome_message, campaign_id, "isPublic")
+    VALUES ('${req.body.shopname}', '${req.body.welcomeMessage}',
+     ${req.body.campaign_id}, ${req.body.isPublic})
+  `
+  console.log(query)
+
+  try{
+    const result = await sql.query(query);
+    res.status(200).send(result)
+  }catch(e){
+    console.error('Error creating new store:', e)
+    res.status(500).json({error: 'Failed to create new store' })
+  }
+})
