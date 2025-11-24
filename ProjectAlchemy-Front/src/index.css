@@ -188,3 +188,14 @@
 .SaveButton:hover{
   background-color:rgb(128, 107, 79);
 }
+
+.newShopModal {
+  display: flex;
+  flex-direction: column;
+}
+
+.newShopModal div {
+  display: flex;
+  gap: 5;
+  background-color: beige;
+}

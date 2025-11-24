@@ -5,12 +5,17 @@ import ShopPreview from './pages/ShopPreview'
 import EditLayout from './pages/EditLayout'
 import ShopView from './pages/ShopView'
 import ShopViewPlayer from './pages/ShopViewPlayer.jsx'
+import ShopCreationPage from './pages/ShopCreationPage.jsx'
+import Modal from 'react-modal';
 
 function App() {
+
+  Modal.setAppElement('#root');
 
   return (
     <>
      <Routes>
+        <Route path="/shopCreation" element={<ShopCreationPage/>}/>
         <Route path="/:storeid" element={<ShopView/>}>
           <Route index element={<ShopPreview/>}/>
           <Route path="Preview" element={<ShopPreview/>}/>
