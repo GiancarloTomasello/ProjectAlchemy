@@ -230,10 +230,30 @@ app.put('/createShop', async(req,res) =>{
   const query = `
     INSERT into storefront  (store_name, welcome_message, 
     campaign_id, "isPublic", store_layout)
-    VALUES ('${req.body.shopname}', '${req.body.welcomeMessage}',
+    VALUES ($$${req.body.shopname}$$, $$${req.body.welcomeMessage}$$,
      ${campaign_id}, ${req.body.isPublic}, '${JSON.stringify(req.body.storeLayout)}'::JSON)
   `
   console.log(query)
+
+  try{
+    const result = await sql.query(query);
+    res.status(200).send(result)
+  }catch(e){
+    console.error('Error creating new store:', e)
+    res.status(500).json({error: 'Failed to create new store' })
+  }
+})
+
+app.put('/createCampaign', async(req,res) =>{
+  console.log('Req.body:', req.body)
+
+  // const campaign_id = req.body.campaign_id === undefined ? null : req.body.campaign_id
+
+  const query = `
+    INSERT into campaigns (campaign_name, user_id, campaign_desc)
+    VALUES ($$${req.body.campaignName}$$, ${req.body.userId}, $$${req.body.campaignDesc}$$)
+  `
+  console.log("query", query)
 
   try{
     const result = await sql.query(query);
