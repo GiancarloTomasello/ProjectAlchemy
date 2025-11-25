@@ -243,3 +243,46 @@ app.put('/createShop', async(req,res) =>{
     res.status(500).json({error: 'Failed to create new store' })
   }
 })
+
+app.get('/getCampaigns/:id', async (req, res) => {
+  const userId = parseInt(req.params.id);
+  console.log(userId)
+
+  const query = `
+    Select *
+    FROM campaigns
+    WHERE user_id = ${userId}
+  `
+
+  console.log(query)
+
+  try{    
+    const result = await sql.query(query);
+    res.status(200).send(result)
+  }catch(e){
+    console.error('Error retreiving Stores:', e)
+    res.status(500).json({error: 'Failed to retrieve Stores from user id' })
+  }
+})
+
+app.get('/getStoresByCampaign/:id', async (req, res) => {
+  const campaignId = parseInt(req.params.id);
+  console.log(campaignId)
+
+  const query = `
+    Select *
+    FROM storefront
+    WHERE campaign_id = ${campaignId}
+    order by id
+  `
+
+  console.log(query)
+
+  try{    
+    const result = await sql.query(query);
+    res.status(200).send(result)
+  }catch(e){
+    console.error('Error retreiving Stores:', e)
+    res.status(500).json({error: 'Failed to retrieve Stores from user id' })
+  }
+})
