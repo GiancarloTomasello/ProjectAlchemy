@@ -74,6 +74,16 @@ export const StoreProvider = ({ children }) => {
         }
     }
 
+    const fetchCampaignList = async(campaignId) =>{
+        console.log("Get users campaigns")
+        try{
+            const response = await axios.get(`http://localhost:3001/getCampaigns/${campaignId}`)
+            return response.data
+        }catch(err){
+            console.log(err);
+        }
+    }
+
     const updateStoreCatalog = async(newCatalog) =>{
         try{
             console.log(newCatalog);
@@ -105,6 +115,17 @@ export const StoreProvider = ({ children }) => {
     }
   }
 
+    const createNewCampaign = async(campaigndetail) => {
+    try{
+        //HARD CODED USER ID
+        const userId = 1
+        campaigndetail.userId = 1
+        await axios.put('http://localhost:3001/createCampaign', campaigndetail)
+    }catch(err){
+        console.log(err)
+    }
+  }
+
   useEffect(()=>{
     setStockedItemList(stockedItemInfo.map((item) => {
                     console.log("checking index:", item)
@@ -118,7 +139,8 @@ export const StoreProvider = ({ children }) => {
         catalogError, setCatalogError, stockedItemInfo, setStockedItemInfo,
         stockedItemList, setStockedItemList, storeLayout, setStoreLayout,
         updateStoreCatalog, shopDisplayPage, setShopDisplayPage, updateStoreLayout,
-        componentMap, shoppingCart, setShoppingCart, createNewStorefront, fetchStoreLayout
+        componentMap, shoppingCart, setShoppingCart, createNewStorefront, createNewCampaign,
+        fetchStoreLayout, fetchCampaignList
     }
     return (
         <StoreContext.Provider value={value}>

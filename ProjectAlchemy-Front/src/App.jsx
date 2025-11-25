@@ -7,6 +7,7 @@ import ShopView from './pages/ShopView'
 import ShopViewPlayer from './pages/ShopViewPlayer.jsx'
 import ShopCreationPage from './pages/ShopCreationPage.jsx'
 import Modal from 'react-modal';
+import CampaignCreationPage from './pages/CampaignCreationPage.jsx'
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
   return (
     <>
      <Routes>
+        <Route path="/campaignCreation" element={<CampaignCreationPage/>}/>
         <Route path="/shopCreation" element={<ShopCreationPage/>}/>
         <Route path="/:storeid" element={<ShopView/>}>
           <Route index element={<ShopPreview/>}/>
