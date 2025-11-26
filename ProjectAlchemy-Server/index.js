@@ -225,7 +225,7 @@ app.get('/getUserIdByName/:username', async (req, res) => {
 app.put('/createShop', async(req,res) =>{
   console.log(req.body.shopname)
 
-  const campaign_id = req.body.campaign_id === undefined ? null : req.body.campaign_id
+  const campaign_id = req.body.campaignId === undefined ? null : req.body.campaignId
 
   const query = `
     INSERT into storefront  (store_name, welcome_message, 
