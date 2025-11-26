@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import StoreCard from "../components/Cards/StoreCard"
 import axios from 'axios';
 import Modal from 'react-modal';
@@ -14,9 +14,10 @@ function ShopCreationPage(){
         {name: 'store 2', description: 'your second store'}
     ])
     const [modalIsOpen, SetModalIsOpen] = useState(false);
+    const [campaginList, setCampaignList] = useState([])
     const [newShopForm, setNewShopForm] = useState(null);
 
-    const {createNewStorefront} = useStoreContext();
+    const {createNewStorefront, fetchCampaignList} = useStoreContext();
 
     const {campaignid} = useParams();
 
@@ -38,17 +39,16 @@ function ShopCreationPage(){
         e.preventDefault();
 
 
-        const formData = new FormData(e.target)
         const storeDetail = {
-            shopname: formData.get('shopname'),
-            welcomeMessage: formData.get('welcomeMessage'),
-            campaignId: formData.get('campaignId'),
-            isPublic: (formData.get('isPublic')=='on'? true : false),
+            shopname: e.target.shopname.value,
+            welcomeMessage: e.target.welcomeMessage.value,
+            campaignId: e.target.campaignList.value,
+            isPublic: (e.target.isPublic.value=='on'? true : false),
             storeLayout: [
                 {
                     "name": "Banner",
                     "props": {
-                    "name": formData.get('shopname'),
+                    "name": e.target.shopname.value,
                     "img": null
                     }
                 },
@@ -59,7 +59,7 @@ function ShopCreationPage(){
             ]
         }
 
-        // console.log("ispublic", storeDetail)
+        console.log("ispublic", storeDetail)
         await createNewStorefront(storeDetail)
 
         await getStoreList()
@@ -68,7 +68,7 @@ function ShopCreationPage(){
 
     //When the page load attempt to retreive the full list of shops from backend
 
-    const getStoreList = async () => {
+    const getStoreList = useCallback(async () => {
         try{
             //HARD CODE USER ID
             const userId = 1
@@ -84,12 +84,20 @@ function ShopCreationPage(){
         }catch(err){
             console.error(err.message)
         }
-    }
+    }, [campaignid, setCurrentShops])
+
+
+
+    const getCampaignList = useCallback(async() => {
+        const list = await fetchCampaignList(1);
+        console.log(list)
+        setCampaignList(list);
+    },[fetchCampaignList])
 
     useEffect(()=>{
-
         getStoreList()
-    }, [])
+        getCampaignList()
+    }, [getStoreList, getCampaignList])
 
     function openModal(){
         SetModalIsOpen(true);
@@ -139,6 +147,11 @@ function ShopCreationPage(){
                     </div>
                     <div>
                         <label>Campaign Tag</label>
+                        <select id="campaignList"  name="campaignList">
+                            {campaginList.map(campaign => <option value={campaign.id}>
+                                {campaign.campaign_name}
+                            </option>)}
+                        </select>
                     </div>
                     <div>
                         <label>Is shop public</label>
