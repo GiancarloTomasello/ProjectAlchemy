@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import StoreCard from "../components/Cards/StoreCard"
 import axios from 'axios';
 import Modal from 'react-modal';
@@ -13,8 +13,9 @@ function ShopCreationPage(){
     ])
     const [modalIsOpen, SetModalIsOpen] = useState(false);
     const [newShopForm, setNewShopForm] = useState(null);
+    const [campaignList, setCampaignList] = useState([])
 
-    const {createNewStorefront} = useStoreContext();
+    const {createNewStorefront, fetchCampaignList} = useStoreContext();
 
 
     const customStyles = {
@@ -32,18 +33,18 @@ function ShopCreationPage(){
     const createShop = async (e) =>{
         e.preventDefault();
 
+        console.log(e.target.campaignselector.value)
 
-        const formData = new FormData(e.target)
         const storeDetail = {
-            shopname: formData.get('shopname'),
-            welcomeMessage: formData.get('welcomeMessage'),
-            campaignId: formData.get('campaignId'),
-            isPublic: (formData.get('isPublic')=='on'? true : false),
+            shopname: e.target.shopname.value,
+            welcomeMessage: e.target.welcomeMessage.value,
+            campaignId: e.target.campaignselector.value,
+            isPublic: (e.target.isPublic.value=='on'? true : false),
             storeLayout: [
                 {
                     "name": "Banner",
                     "props": {
-                    "name": formData.get('shopname'),
+                    "name": e.target.shopname.value,
                     "img": null
                     }
                 },
@@ -75,10 +76,17 @@ function ShopCreationPage(){
         }
     }
 
+    const updateCampaignList = useCallback(async() =>{
+        const campaignList = await fetchCampaignList(1)
+        setCampaignList(campaignList);
+    }, [fetchCampaignList])
+    
     useEffect(()=>{
 
         getStoreList()
-    }, [])
+        updateCampaignList()
+    }, [updateCampaignList])
+    
 
     function openModal(){
         SetModalIsOpen(true);
@@ -114,6 +122,9 @@ function ShopCreationPage(){
                     </div>
                     <div>
                         <label>Campaign Tag</label>
+                        <select id='campaignSelector' name='campaignselector'>
+                            {campaignList.map(campaign => <option value={campaign.id}>{campaign.campaign_name}</option>)}
+                        </select>
                     </div>
                     <div>
                         <label>Is shop public</label>
