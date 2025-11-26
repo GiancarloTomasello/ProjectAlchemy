@@ -1,16 +1,22 @@
 import { useNavigate } from "react-router-dom";
 import { useStoreContext } from "../../context";
-
+import { useLocation } from "react-router-dom";
 function StoreCard({name, welcome, id}){
     const navigate = useNavigate()
     const {fetchStoreLayout} = useStoreContext();
+    const isOwnerPath = !useLocation().pathname.includes('player');
+
 
     const storeSelected = async () =>{
         console.log(`you clicked on ${id}, ${name}`)
         //Get store id and navigate to it
         await fetchStoreLayout(id)
-
-        navigate(`/${id}/Preview`, {state: {storeId: id}})
+        console.log("ownerPath check", isOwnerPath)
+        if(isOwnerPath){
+            navigate(`/${id}/Preview`)
+        }else{
+            navigate(`/player/store/${id}`)
+        }
     }
 
     return(

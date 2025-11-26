@@ -97,6 +97,7 @@ function CampaignCreationPage(){
                         key={index}
                         name={campagin.campaign_name}
                         desc={campagin.campaign_desc}
+                        id={campagin.id}
                     />
                 )}
             </ul>

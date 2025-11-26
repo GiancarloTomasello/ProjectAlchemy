@@ -10,7 +10,7 @@ function CampaignCard({name, desc, id}){
         //Get store id and navigate to it
         //await fetchStoreLayout(id)
 
-       // navigate(`/${id}/Preview`, {state: {storeId: id}})
+       navigate(`/storeList/${id}`)
     }
 
     return(
