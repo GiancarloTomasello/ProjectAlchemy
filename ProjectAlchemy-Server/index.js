@@ -347,7 +347,7 @@ app.put('/makePurchase/:storeId', async(req, res)=>{
   const currentDate = new Date();
   const query = `
     INSERT into orders (store_id, item_list, date_purchased)
-    VALUES (${storeId}, '${JSON.stringify(req.body)}'::JSON, NOW())
+    VALUES (${storeId}, $$${JSON.stringify(req.body)}$$::JSON, NOW())
   `
   console.log(query)
 

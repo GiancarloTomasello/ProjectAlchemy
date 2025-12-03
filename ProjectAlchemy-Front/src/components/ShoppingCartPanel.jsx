@@ -4,7 +4,7 @@ import ItemCardCart from './ItemCardCart';
 import { useStoreContext } from '../context';
 
 function ShoppingCartPanel(){
-    const {shoppingCart, setShoppingCart, currentStoreId} = useStoreContext();
+    const {shoppingCart, setShoppingCart, currentStoreId, makePurchase} = useStoreContext();
     
     const sidePanelRef = useRef(null);
     const buttonRef = useRef(null);
@@ -40,6 +40,7 @@ function ShoppingCartPanel(){
     const submitPurchase = (e) =>{
         e.preventDefault();
         console.log("Make purchase at store ", currentStoreId)
+        makePurchase(shoppingCart)
         setShoppingCart([])
 
     }
