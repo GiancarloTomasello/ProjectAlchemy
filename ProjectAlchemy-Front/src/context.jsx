@@ -21,6 +21,8 @@ export const StoreProvider = ({ children }) => {
     const [shopDisplayPage, setShopDisplayPage] = useState('preview');
     const [shoppingCart, setShoppingCart] = useState([]);
 
+    const [currentStoreId, setCurrentStoreId] = useState(0);
+
     const componentMap ={
     'Card': Card,
     'Banner': Banner,
@@ -126,6 +128,14 @@ export const StoreProvider = ({ children }) => {
     }
   }
 
+  const updateItemOverride = async(itemOverides) => {
+    try{
+        await axios.put(`http://localhost:3001/updateItemValuesByName`, itemOverides)
+    }catch(err){
+        console.log(err)
+    }
+  }
+
   useEffect(()=>{
     setStockedItemList(stockedItemInfo.map((item) => {
                     console.log("checking index:", item)
@@ -140,7 +150,7 @@ export const StoreProvider = ({ children }) => {
         stockedItemList, setStockedItemList, storeLayout, setStoreLayout,
         updateStoreCatalog, shopDisplayPage, setShopDisplayPage, updateStoreLayout,
         componentMap, shoppingCart, setShoppingCart, createNewStorefront, createNewCampaign,
-        fetchStoreLayout, fetchCampaignList
+        fetchStoreLayout, fetchCampaignList, currentStoreId, setCurrentStoreId, updateItemOverride
     }
     return (
         <StoreContext.Provider value={value}>

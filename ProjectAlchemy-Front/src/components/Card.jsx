@@ -1,6 +1,15 @@
 function Card(props){
+
+    const cardSelected = () => {
+        console.log(props)
+        console.log(`you have selected ${props.id} ${props.name}`)
+        if(props.interactFunction){
+            props.interactFunction(props)
+        }
+    }
+    
     return(
-        <div className="card">
+        <div onClick={cardSelected} className="card">
             <img className="card-img" src="https://placehold.co/150" alt="item img"></img>
             <h2 className="card-title">{props.name}</h2>
             <div className="flex gap-1 justify-center">

@@ -1,17 +1,28 @@
-import {useEffect, useState } from "react";
+import {useCallback, useEffect, useState } from "react";
 import { useStoreContext } from "../context";
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import Card from "./Card";
 import ShopCard from "./ShopCard";
+import Modal from 'react-modal';
+
 
 function FullCatalogPanel(){
-    const {itemCatalog, stockedItemInfo, stockedItemList} = useStoreContext();
+    const {itemCatalog, stockedItemInfo, stockedItemList, currentStoreId, updateItemOverride} = useStoreContext();
     const [storeCatalog, setStoreCatalog] = useState([]);
-    const storeId = 1;
+
+    const [modalIsOpen, SetModalIsOpen] = useState(false);
+    const [modalItem, setModalItem] = useState({})
+
+  function openModal(item){
+    SetModalIsOpen(true);
+    setModalItem(item)
+  }
+
+  function closeModal(){
+    SetModalIsOpen(false)
+  }
 
     const isPlayerPath = useLocation().pathname.includes("player");
-
-    console.log('playerChecking store:', itemCatalog[0])
 
     function AddToCart(){
         console.log('Add to cart')
@@ -27,21 +38,90 @@ function FullCatalogPanel(){
                     if(isPlayerPath){
                         return <li><ShopCard {...item} key={item.id}/></li>
                     }else{
-                        return <li><Card {...item} key={item.id}/></li>
+                        return <li><Card {...item} interactFunction={openModal} key={item.id}/></li>
                     }
             })
-        console.log('Catralog Display', catalogDisplay)
         setStoreCatalog(catalogDisplay)
 
-    }, [setStoreCatalog, itemCatalog, stockedItemList])
+    }, [setStoreCatalog, itemCatalog, stockedItemList, isPlayerPath])
     
+    const updateItemOverrides = async(e) =>{
+        e.preventDefault();
+        closeModal();
+
+        // console.log("updateItemSubmit: ",e.target)
+        // console.log(e.target.itemName.value)
+
+        const itemOverides = {
+            storeId: currentStoreId? currentStoreId : 0,
+            itemId: modalItem.id,
+            overrides:{
+                name: modalItem.name == e.target.itemName.value? null: e.target.itemName.value, //To prevent uneeded overrides?
+                cost: e.target.itemCost.value,
+                rarity: e.target.itemRarity.value,
+                description: e.target.itemDescription.value
+            }
+        }
+
+        console.log("ItemOverides:", itemOverides)
+        updateItemOverride(itemOverides)
+    }
+
+    const customStyles = {
+        content: {
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)',
+            color: 'black',
+            maxWidth: '50%',
+            width:'50%',
+            maxHeighth: '50%',
+            height: '50%'
+        },
+    };
+
     return(
         <>
-        <div >
-            <ul id='StoreCatalog' className="flex">
-                {storeCatalog}
-            </ul>
-        </div>
+            <div>
+            <Modal
+                id="Modal"
+                currentLabel="ItemCustomizationModal"
+                isOpen={modalIsOpen}
+                onRequestClose={closeModal}
+                style={customStyles}
+            >
+                <h1>Item Customization</h1>
+                <form className="newShopModal" onSubmit={updateItemOverrides}>
+                    <label>
+                        Item Name : <input id="itemName" type="text" defaultValue={modalItem.name}/>
+                    </label>
+                    <label>
+                        Item Cost: <input id="itemCost" type="text" defaultValue={modalItem.cost}/>
+                    </label>
+                    <label>
+                        Item Rarity:
+                        <select id="itemRarity">
+                            <option value="Common">Common</option>
+                            <option value="Uncommon">Uncommon</option>
+                            <option value="Rare">Rare</option>
+                            <option value="Very Rare">Very Rare</option>
+                            <option value="Legendary">Legendary</option>
+                            <option value="Artifact">Artifact</option>
+                        </select>
+                    </label>
+                    <label>
+                        Description: <input id="itemDescription" type="text" defaultValue={"description"}/>
+                    </label>
+                    <button>Submit</button>
+                </form>
+            </Modal>
+                <ul id='StoreCatalog' className="flex">
+                    {storeCatalog}
+                </ul>
+            </div>
         </>
     )
 }

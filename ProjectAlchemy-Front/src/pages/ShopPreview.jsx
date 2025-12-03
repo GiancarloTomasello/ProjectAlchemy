@@ -6,6 +6,8 @@ import SidePannel from '../components/SidePannel.jsx'
 import { useStoreContext } from '../context.jsx'
 import EditNavBar from '../components/EditNavBar.jsx'
 import {useLocation} from 'react-router-dom'
+import Modal from 'react-modal';
+
 
 
 var items = [
@@ -38,9 +40,7 @@ function ShopPreview() {
     })
 
     setDynamicShopComponent(shopComponents)
-  }, [setDynamicShopComponent, storeLayout])
-
-  //console.log(items[0])
+  }, [setDynamicShopComponent, storeLayout, componentMap])
   return (
     <>
       <SidePannel/>

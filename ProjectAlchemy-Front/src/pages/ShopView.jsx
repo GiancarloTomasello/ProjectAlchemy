@@ -5,9 +5,16 @@ import Banner from '../components/Banner.jsx'
 import SidePannel from '../components/SidePannel.jsx'
 import { useStoreContext } from '../context.jsx'
 import EditNavBar from '../components/EditNavBar.jsx'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useParams } from 'react-router-dom'
 
 function ShopPreview() {
+  const {setCurrentStoreId} = useStoreContext();
+
+  const {storeid} = useParams();
+  if(storeid && setCurrentStoreId){
+    setCurrentStoreId(storeid)
+  }
+
   return (
     <>
       <EditNavBar/>
