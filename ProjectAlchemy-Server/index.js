@@ -306,3 +306,38 @@ app.get('/getStoresByCampaign/:id', async (req, res) => {
     res.status(500).json({error: 'Failed to retrieve Stores from user id' })
   }
 })
+
+app.put('/updateItemValues/:id', async (req,res)=> {
+  
+  const itemId = parseInt(req.params.id);
+
+  const query = `
+    UPDATE storetoitem
+      SET overrides = '${JSON.stringify(req.body)}'::JSON
+      where id= ${itemId}
+  `
+
+  console.log("body= ", JSON.stringify(req.body))
+  console.log(query)
+
+  await sql.query(query);
+
+  res.status(200).send("Info updated");
+})
+
+app.put('/updateItemValuesByName', async (req,res)=> {
+  
+  const query2 = `
+    UPDATE storetoitem
+      SET overrides = '${JSON.stringify(req.body.overrides)}'::JSON
+      where store_id= ${req.body.storeId}
+      and api_index = '${req.body.itemId}'
+  `
+
+  // console.log("body= ", JSON.stringify(req.body))
+  console.log(query2)
+
+  await sql.query(query2);
+
+  res.status(200).send("Done!");
+})
