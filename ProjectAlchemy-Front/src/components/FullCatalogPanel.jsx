@@ -7,7 +7,7 @@ import Modal from 'react-modal';
 
 
 function FullCatalogPanel(){
-    const {itemCatalog, stockedItemInfo, stockedItemList, currentStoreId, updateItemOverride} = useStoreContext();
+    const {itemCatalog, stockedItemList, setStockedItemList, currentStoreId, updateItemOverride} = useStoreContext();
     const [storeCatalog, setStoreCatalog] = useState([]);
 
     const [modalIsOpen, SetModalIsOpen] = useState(false);
@@ -50,19 +50,6 @@ function FullCatalogPanel(){
                     }
             })
 
-        // console.log("stock item list: ", stockedItemList)
-
-        // const catalogDisplay = stockedItemList.filter(
-        //     (stockItem) => stockItem.inStock).map(
-        //         (item) =>{
-        //             if(isPlayerPath){
-        //                 return <li><ShopCard {...item} key={item.id}/></li>
-        //             }else{
-        //                 console.log("item", item)
-        //                 return <li><Card {...item} interactFunction={openModal} key={item.id}/></li>
-        //             }   
-        //     })
-
         setStoreCatalog(catalogDisplay)
 
     }, [setStoreCatalog, itemCatalog, stockedItemList, isPlayerPath])
@@ -84,9 +71,16 @@ function FullCatalogPanel(){
                 description: e.target.itemDescription.value
             }
         }
-
-        console.log("ItemOverides:", itemOverides)
         updateItemOverride(itemOverides)
+        //Update overrides
+        const newStock = stockedItemList.map((item)=>{
+            if(item.api_index == modalItem.id){
+                const test = {...item, overrides: itemOverides.overrides}
+                return test
+            }
+            return item
+        })
+        setStockedItemList(newStock)
     }
 
     const customStyles = {
