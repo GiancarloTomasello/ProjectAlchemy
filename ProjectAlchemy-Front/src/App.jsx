@@ -9,6 +9,7 @@ import ShopCreationPage from './pages/ShopCreationPage.jsx'
 import Modal from 'react-modal';
 import CampaignCreationPage from './pages/CampaignCreationPage.jsx'
 import ShopListPage from './pages/ShopListPage.jsx'
+import OrderPage from './pages/OrdersPage.jsx'
 
 function App() {
 
@@ -25,17 +26,12 @@ function App() {
           <Route path="Preview" element={<ShopPreview/>}/>
           <Route path="EditLayout" element={<EditLayout/>}/>
           <Route path="EditCatalog" element={<ShopPreview/>}/>
+          <Route path="OrderList" element={<OrderPage/>}/>
         </Route>
         <Route path="/shop/:storeid" element={<ShopPreview/>}/>
         {/* Player Paths */}
         <Route path="/player/store/:storeid" element={<ShopViewPlayer/>}/>
         <Route path="/player/storeList/:campaignid" element={<ShopListPage/>}/>
-        <Route path="/player/:storeid" element={<ShopView/>}>
-          <Route index element = {<ShopView/>}/>
-          <Route path="Preview" element={<ShopPreview/>}/>
-          <Route path="EditLayout" element={<EditLayout/>}/>
-          <Route path="EditCatalog" element={<ShopPreview/>}/>
-        </Route>
      </Routes>
     </>
   )

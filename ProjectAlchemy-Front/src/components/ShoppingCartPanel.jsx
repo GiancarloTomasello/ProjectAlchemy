@@ -4,7 +4,7 @@ import ItemCardCart from './ItemCardCart';
 import { useStoreContext } from '../context';
 
 function ShoppingCartPanel(){
-    const {shoppingCart, setShoppingCart} = useStoreContext();
+    const {shoppingCart, setShoppingCart, currentStoreId} = useStoreContext();
     
     const sidePanelRef = useRef(null);
     const buttonRef = useRef(null);
@@ -37,6 +37,13 @@ function ShoppingCartPanel(){
         }
     }
 
+    const submitPurchase = (e) =>{
+        e.preventDefault();
+        console.log("Make purchase at store ", currentStoreId)
+        setShoppingCart([])
+
+    }
+
     return(
         <>
         <button ref={buttonRef} id="sidePannelButton" onClick={TogglePanel}
@@ -53,6 +60,7 @@ function ShoppingCartPanel(){
                     {shoppingCart.map(item => <li><ItemCardCart item={item} AddToCart={AddToCart} key={item.id}/></li>)}
                 </ol>
             </div>
+            <button onClick={submitPurchase}>Submit purchase</button>
         </div>     
         </>
     );

@@ -21,7 +21,8 @@ export const StoreProvider = ({ children }) => {
     const [shopDisplayPage, setShopDisplayPage] = useState('preview');
     const [shoppingCart, setShoppingCart] = useState([]);
 
-    const [currentStoreId, setCurrentStoreId] = useState(0);
+    const [currentStoreId, setCurrentStoreId] = useState(1);
+    const [storeOrders, setStoreOrders] = useState([]);
 
     const componentMap ={
     'Card': Card,
@@ -64,6 +65,10 @@ export const StoreProvider = ({ children }) => {
     fetchStockedItems()
     //fetchStoreLayout()
 }, []);
+
+    useEffect(()=>{
+        fetchStoreLayout(currentStoreId)
+    }, [currentStoreId]) 
 
     const fetchStoreLayout = async(storeId) =>{
         //const storeId = 1;
@@ -136,6 +141,25 @@ export const StoreProvider = ({ children }) => {
     }
   }
 
+  const makePurchase = async(purchasedItems) =>{
+    try{
+        await axios.put(`http://localhost:3001/makePurchase/${currentStoreId}`, purchasedItems)
+    }catch(err){
+        console.log(err)
+    }
+  }
+
+  const getStoreOrders = async() =>{
+    try{
+        const result = await axios.get(`http://localhost:3001/getOrders/${currentStoreId}`)
+        setStoreOrders(result.data)
+        return result.data;
+    }catch(err){
+        console.log(err)
+    }
+  }
+  
+
   useEffect(()=>{
     setStockedItemList(stockedItemInfo.map((item) => {
                     //console.log("checking index:", item)
@@ -150,7 +174,8 @@ export const StoreProvider = ({ children }) => {
         stockedItemList, setStockedItemList, storeLayout, setStoreLayout,
         updateStoreCatalog, shopDisplayPage, setShopDisplayPage, updateStoreLayout,
         componentMap, shoppingCart, setShoppingCart, createNewStorefront, createNewCampaign,
-        fetchStoreLayout, fetchCampaignList, currentStoreId, setCurrentStoreId, updateItemOverride
+        fetchStoreLayout, fetchCampaignList, currentStoreId, setCurrentStoreId, updateItemOverride,
+        storeOrders, getStoreOrders, makePurchase
     }
     return (
         <StoreContext.Provider value={value}>

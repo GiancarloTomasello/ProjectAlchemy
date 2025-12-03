@@ -8,7 +8,7 @@ import EditNavBar from '../components/EditNavBar.jsx'
 import { Outlet, useParams } from 'react-router-dom'
 
 function ShopPreview() {
-  const {setCurrentStoreId} = useStoreContext();
+  const {setCurrentStoreId} = useStoreContext(); //Causing a Uncaught TypeError: (intermediate value)() is undefined, but not consistent
 
   const {storeid} = useParams();
   if(storeid && setCurrentStoreId){

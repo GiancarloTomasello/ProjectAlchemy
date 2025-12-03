@@ -2,15 +2,20 @@ import { useState, useEffect} from "react";
 import { useStoreContext } from "../context";
 import ShopNavBar from "../components/ShopNavBar";
 import {Toaster} from 'react-hot-toast'
+import { useParams } from "react-router-dom";
 
 
 function ShopViewPlayer(){
     if(!useStoreContext()){
       console.log('PROBLEM WITH STORE CONTEXT')
     }
-    const {componentMap, storeLayout} = useStoreContext();
+    const {componentMap, storeLayout, setCurrentStoreId} = useStoreContext();
     const [dynamicShopComponent, setDynamicShopComponent] = useState([]);
     
+    const {storeid} = useParams();
+    if(storeid && setCurrentStoreId){
+      setCurrentStoreId(storeid)
+    }
 
     useEffect(()=>{
         const shopComponents = storeLayout.map((item,index) =>{

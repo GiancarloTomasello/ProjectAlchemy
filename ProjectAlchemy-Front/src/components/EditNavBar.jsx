@@ -20,6 +20,9 @@ function EditNavBar(){
             <NavLink to="EditCatalog">
                 <button id='catalogButton'>Edit Catalog</button>
             </NavLink>
+            <NavLink to="OrderList">
+                <button id='catalogButton'>Orders</button>
+            </NavLink>
             <button onClick={createShopLink} id='ShareLink'>Share Link</button>
         </div>
         <Toaster/>
