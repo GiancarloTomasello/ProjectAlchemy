@@ -341,3 +341,33 @@ app.put('/updateItemValuesByName', async (req,res)=> {
 
   res.status(200).send("Done!");
 })
+
+app.put('/makePurchase/:storeId', async(req, res)=>{
+  const storeId = parseInt(req.params.storeId);
+  const currentDate = new Date();
+  const query = `
+    INSERT into orders (store_id, item_list, date_purchased)
+    VALUES (${storeId}, '${JSON.stringify(req.body)}'::JSON, NOW())
+  `
+  console.log(query)
+
+  await sql.query(query);
+
+  res.status(200).send("done");
+})
+
+app.get('/getOrders/:storeId', async(req, res)=>{
+  const storeId = parseInt(req.params.storeId);
+  const currentDate = new Date();
+  const query = `
+    SELECT *
+    from orders
+    where store_id = ${storeId}
+    order by date_purchased desc
+  `
+  console.log(query)
+
+  result = await sql.query(query);
+
+  res.status(200).send(result);
+})
