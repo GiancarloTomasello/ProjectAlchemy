@@ -138,7 +138,7 @@ export const StoreProvider = ({ children }) => {
 
   useEffect(()=>{
     setStockedItemList(stockedItemInfo.map((item) => {
-                    console.log("checking index:", item)
+                    //console.log("checking index:", item)
                     return item}
                 ))
   }, [stockedItemInfo])

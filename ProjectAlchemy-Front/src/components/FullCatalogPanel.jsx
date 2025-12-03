@@ -28,7 +28,14 @@ function FullCatalogPanel(){
         console.log('Add to cart')
     }
 
+ 
+
     useEffect(() => {
+
+        const getOverridefromStock = (index) =>{
+            const found = stockedItemList.find(stockItem => stockItem.api_index == index)
+            return found.overrides
+        }
 
         const catalogDisplay = itemCatalog.filter(
             item => stockedItemList.some(
@@ -38,9 +45,24 @@ function FullCatalogPanel(){
                     if(isPlayerPath){
                         return <li><ShopCard {...item} key={item.id}/></li>
                     }else{
-                        return <li><Card {...item} interactFunction={openModal} key={item.id}/></li>
+                        const overrides = getOverridefromStock(item.id)
+                        return <li><Card {...item} overrides={overrides} interactFunction={openModal} key={item.id}/></li>
                     }
             })
+
+        // console.log("stock item list: ", stockedItemList)
+
+        // const catalogDisplay = stockedItemList.filter(
+        //     (stockItem) => stockItem.inStock).map(
+        //         (item) =>{
+        //             if(isPlayerPath){
+        //                 return <li><ShopCard {...item} key={item.id}/></li>
+        //             }else{
+        //                 console.log("item", item)
+        //                 return <li><Card {...item} interactFunction={openModal} key={item.id}/></li>
+        //             }   
+        //     })
+
         setStoreCatalog(catalogDisplay)
 
     }, [setStoreCatalog, itemCatalog, stockedItemList, isPlayerPath])
