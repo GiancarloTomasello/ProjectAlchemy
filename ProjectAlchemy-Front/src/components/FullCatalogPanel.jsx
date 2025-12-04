@@ -58,8 +58,9 @@ function FullCatalogPanel(){
         e.preventDefault();
         closeModal();
 
-        // console.log("updateItemSubmit: ",e.target)
-        // console.log(e.target.itemName.value)
+        console.log("updateItemSubmit: ",e.target)
+        console.log("description", e.target.description.value)
+        console.log("Modal Description", modalItem)
 
         const itemOverides = {
             storeId: currentStoreId? currentStoreId : 0,
@@ -68,7 +69,7 @@ function FullCatalogPanel(){
                 name: modalItem.name == e.target.itemName.value? null: e.target.itemName.value, //To prevent uneeded overrides?
                 cost: e.target.itemCost.value,
                 rarity: e.target.itemRarity.value,
-                description: e.target.itemDescription.value
+                description: e.target.description.value
             }
         }
         updateItemOverride(itemOverides)
@@ -83,22 +84,6 @@ function FullCatalogPanel(){
         setStockedItemList(newStock)
     }
 
-    const customStyles = {
-        content: {
-            top: '50%',
-            left: '50%',
-            right: 'auto',
-            bottom: 'auto',
-            marginRight: '-50%',
-            transform: 'translate(-50%, -50%)',
-            color: 'black',
-            maxWidth: '50%',
-            width:'50%',
-            maxHeighth: '50%',
-            height: '50%'
-        },
-    };
-
     return(
         <>
             <div>
@@ -107,9 +92,9 @@ function FullCatalogPanel(){
                 currentLabel="ItemCustomizationModal"
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}
-                style={customStyles}
+                className="modalContent"
             >
-                <h1>Item Customization</h1>
+                <h1 className="text-center">Item Customization</h1>
                 <form className="newShopModal" onSubmit={updateItemOverrides}>
                     <label>
                         Item Name : <input id="itemName" type="text" defaultValue={modalItem.name}/>
@@ -129,9 +114,18 @@ function FullCatalogPanel(){
                         </select>
                     </label>
                     <label>
-                        Description: <input id="itemDescription" type="text" defaultValue={"description"}/>
+                        Description: 
+                        <textarea
+                            id="itemDescription"
+                            name="description"
+                            defaultValue={modalItem.description && modalItem.description.length > 0?
+                                modalItem.description[0] : "A fun new item for your adventure"
+                            }
+                            rows={10}
+                            cols={100}
+                        />
                     </label>
-                    <button>Submit</button>
+                    <button className="absolute insert-x-0 bottom-10 left-1/4 w-1/2 p-5 justify-center content-center">Submit</button>
                 </form>
             </Modal>
                 <ul id='StoreCatalog' className="flex">
