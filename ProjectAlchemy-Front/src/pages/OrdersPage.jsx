@@ -1,23 +1,11 @@
-import { use, useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import EditNavBar from '../components/EditNavBar.jsx'
 import { useStoreContext } from '../context.jsx'
 import ComponentDisplayCard from '../components/ComponentDisplayCard.jsx';
 
 function OrderList(){
-      const {storeOrders, getStoreOrders} = useStoreContext();
+      const {storeOrders} = useStoreContext();
       const [orderList, setOrderList]= useState([]);
-
-    //   const updateOrders = useCallback(async() =>{
-    //       const order = await getStoreOrders()
-    //       console.log("orders", order);
-    //   }, [getStoreOrders])
-
-    // useEffect(()=>{
-    //     updateOrders()
-    //     //console.log(getStoreOrders)
-    //     //updateOrders()
-    // }, [updateOrders])
-
 
     useEffect(()=>{
         if(!storeOrders){
@@ -31,32 +19,29 @@ function OrderList(){
                     <th scope='col'>{orders.item_list.map(item => item.name).toString()}</th>
                 </tr>
         })
-        console.log("storeOrder", storeOrders)
-        console.log("tableList", tableList)
         setOrderList(tableList)
     }, [storeOrders])
-
-      
 
     return(
         <>
             <h1 className='text-center'>Orders Created for this store</h1>
             <div>
-                <h1>TEsting</h1>
-                <h1>{orderList && orderList.length > 0? orderList[0].date_purchased:"blank"}</h1>
-                <table>
-                    <caption>Purchases</caption>
-                    <thead>
-                        <tr>
-                            <th scope='col'>date purchased</th>
-                            <th scope='col'>User</th>
-                            <th scope='col'>Items</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                      {orderList} 
-                    </tbody>
-                </table>
+                {orderList && orderList.length > 0? 
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope='col'>date purchased</th>
+                                <th scope='col'>User</th>
+                                <th scope='col'>Items</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {orderList} 
+                        </tbody>
+                    </table>
+                :
+                    <h1>Currently No Orders</h1>
+                }
             </div>
         </>
     )
