@@ -71,8 +71,9 @@
 .catalog{
   margin:2;
   max-height: 80%;
-  height: 80%;
+  height: 75%;
   overflow-y: scroll;
+  border: 5px solid slategray;
 }
 
 
@@ -94,6 +95,10 @@
   background-color: gray;
   border-radius: 10px;
   right: 25%;
+  width: 25%;
+  height: 5%;
+  justify-items: center;
+  margin: 5;
 }
 
 .sidePanel .sideButton:hover{

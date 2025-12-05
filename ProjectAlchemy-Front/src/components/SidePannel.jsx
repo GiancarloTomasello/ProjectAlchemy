@@ -11,6 +11,10 @@ function SidePannel(){
     const buttonRef = useRef(null);
     const [sidePanelState, setSidePanelState] = useState(false);
 
+    const [filteredCatalog, setfilteredCatalog] = useState([]);
+    const [rarityFilter, setRarityFilter] = useState('any');
+    const [typeFilter, setTypeFilter] = useState('any');
+
     const TogglePanel = useCallback(() => {
         if(sidePanelRef.current){
                 if(sidePanelState){
@@ -29,27 +33,59 @@ function SidePannel(){
             }
     }, [setSidePanelState, sidePanelState])
 
-    //Implementation to close panel when clicking off
-    //BUG: Currently triggers when clicking on itemCards too
+    // //Implementation to close panel when clicking off
+    // //BUG: Currently triggers when clicking on itemCards too
+    // useEffect(() => {
+    //     function handler (e){
+    //         console.log(e.target.parentElement.contains(sidePanelRef.current))
+    //         if(sidePanelRef.current && sidePanelState == true && e.target != buttonRef.current){
+    //             if(e.target != sidePanelRef.current){
+    //                 //TogglePanel()
+    //             }
+    //         }
+    //     }
+
+    //     document.addEventListener("click", handler)
+
+    //     return () => {
+    //         document.removeEventListener('click', handler)
+    //     }
+    // }, [sidePanelState, TogglePanel])
+
+    const filterCatalog = useCallback(() =>{
+        let newCatalog = itemCatalog
+        //Filter by rarity
+        newCatalog = newCatalog.filter(item => item.rarity === rarityFilter || rarityFilter=== 'any')
+
+        console.log(newCatalog[0].equipmentCatagory)
+        console.log(typeFilter)
+        //Filter by type
+        newCatalog = newCatalog.filter(item => item.equipmentCatagory === typeFilter || typeFilter === 'any')
+
+        console.log("filtered catalog", newCatalog)
+        setfilteredCatalog(newCatalog)
+    }, [itemCatalog, rarityFilter, typeFilter])
+
     useEffect(() => {
-        function handler (e){
-            console.log(e.target.parentElement.contains(sidePanelRef.current))
-            if(sidePanelRef.current && sidePanelState == true && e.target != buttonRef.current){
-                if(e.target != sidePanelRef.current){
-                    //TogglePanel()
-                }
-            }
-        }
-
-        document.addEventListener("click", handler)
-
-        return () => {
-            document.removeEventListener('click', handler)
-        }
-    }, [sidePanelState, TogglePanel])
-
+        filterCatalog()
+    }, [filterCatalog])
+    
+    
     const UpdateCatalog = () => {
         updateStoreCatalog(stockedItemList)
+    }
+
+    const filterRarity = (e) =>{
+        console.log("rarity changed = ", e.target.value)
+        const filter = e.target.value
+        setRarityFilter(filter);
+        //filterCatalog();
+    }
+
+    const filterType = (e) =>{
+        console.log(e.target.value)
+        const filter = e.target.value
+        setTypeFilter(filter);
     }
 
     return(
@@ -62,12 +98,44 @@ function SidePannel(){
 
             <div className="sidepanel header">
                 <h1 className="font-bold">Item List</h1>
-                <button className='sideButton' onClick={UpdateCatalog}>Update Catalog</button>
+            </div>
+            <div className='flex flex-row m-1 bg-stone-400 border-4 border-black-500 rounded p-2 justify-center gap-5'>
+                <label>
+                    Rarity: 
+                    <select onChange={filterRarity} className='m-3 border-1 border-black rounded text-center'>
+                        <option value='any'>Any</option>
+                        <option value='Common'>Common</option>
+                        <option value='Uncommon'>Uncommon</option>
+                        <option value='Rare'>Rare</option>
+                        <option value='Very Rare'>Very Rare</option>
+                        <option value='Legendary'>Legendary</option>
+                        <option value='Artifact'>Artifact</option>
+                    </select>
+                </label>
+                <label>
+                    Type: 
+                    <select onChange={filterType} className='m-3 border-1 border-black rounded text-center'>
+                        <option value='any' selected>Any</option>
+                        <option value='Adventuring Gear'>Adventuring Gear</option>
+                        <option value='Armor'>Armor</option>
+                        <option value='Potion'>Potion</option>
+                        <option value='Ring'>Ring</option>
+                        <option value='Rod'>Rod</option>
+                        <option value='Shield'>Shield</option>
+                        <option value='Tools'>Tools</option>
+                        <option value='Weapon'>Weapon</option>
+                        <option value='Wondrous Items'>Wonderous Items</option>
+                        
+                    </select>
+                </label>
             </div>
             <div className='sidepanel catalog'>
                 <ol className=''>
-                    {itemCatalog.map(item => <li><ItemCardSimple item={item} key={item.id}/></li>)}
+                    {filteredCatalog.map(item => <li><ItemCardSimple item={item} key={item.id}/></li>)}
                 </ol>
+            </div>
+            <div className='w-full h-full text-center'>
+                <button className='sideButton' onClick={UpdateCatalog}>Update Catalog</button>
             </div>
         </div>     
         </>
