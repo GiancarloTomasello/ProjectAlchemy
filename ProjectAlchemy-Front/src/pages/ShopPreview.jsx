@@ -49,7 +49,7 @@ function ShopPreview() {
         {(!isLoadingCatalog && !catalogError) ?
           itemCatalog.filter(item => stockedItemList.some((stockitem) => stockitem.api_index === item.id && stockitem.inStock))
                       .map(item => <li><Card {...item} key={item.id}/></li>):
-                        <p>ERROR</p>}
+                        <p>Loading</p>}
       </ul>
 
       {/* <ul id='equptList'>DB Equipment LIST</ul>

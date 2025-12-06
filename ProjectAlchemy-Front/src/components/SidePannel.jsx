@@ -57,7 +57,6 @@ function SidePannel(){
         //Filter by rarity
         newCatalog = newCatalog.filter(item => item.rarity === rarityFilter || rarityFilter=== 'any')
 
-        console.log(newCatalog[0].equipmentCatagory)
         console.log(typeFilter)
         //Filter by type
         newCatalog = newCatalog.filter(item => item.equipmentCatagory === typeFilter || typeFilter === 'any')
@@ -131,7 +130,7 @@ function SidePannel(){
             </div>
             <div className='sidepanel catalog'>
                 <ol className=''>
-                    {filteredCatalog.map(item => <li><ItemCardSimple item={item} key={item.id}/></li>)}
+                    {filteredCatalog.map((item, index) => <li><ItemCardSimple item={item} key={index}/></li>)}
                 </ol>
             </div>
             <div className='w-full h-full text-center'>
