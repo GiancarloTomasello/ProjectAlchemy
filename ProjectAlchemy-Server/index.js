@@ -330,10 +330,11 @@ app.put('/updateItemValues/:id', async (req,res)=> {
 app.put('/updateItemValuesByName', async (req,res)=> {
   
   const query2 = `
-    UPDATE storetoitem
-      SET overrides = '${JSON.stringify(req.body.overrides)}'::JSON
-      where store_id= ${req.body.storeId}
-      and api_index = '${req.body.itemId}'
+    INSERT INTO storetoitem (api_index, overrides, store_id)
+    VALUES ('${req.body.itemId}', $$${JSON.stringify(req.body.overrides)}$$::JSON, ${req.body.storeId})
+    ON CONFLICT(api_index,store_id)
+    DO UPDATE SET
+      overrides = $$${JSON.stringify(req.body.overrides)}$$::JSON
   `
 
   // console.log("body= ", JSON.stringify(req.body))

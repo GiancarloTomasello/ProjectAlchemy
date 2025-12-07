@@ -68,6 +68,7 @@ function FullCatalogPanel(){
             overrides:{
                 name: modalItem.name == e.target.itemName.value? null: e.target.itemName.value, //To prevent uneeded overrides?
                 cost: e.target.itemCost.value,
+                unit: e.target.costUnit.value,
                 rarity: e.target.itemRarity.value,
                 description: e.target.description.value
             }
@@ -97,16 +98,24 @@ function FullCatalogPanel(){
                 <h1 className="text-center">Item Customization</h1>
                 <form className="newShopModal" onSubmit={updateItemOverrides}>
                     <label>
-                        Item Name : <input id="itemName" type="text" defaultValue={modalItem.name}/>
+                        Item Name: <input className='mr-2' id="itemName" type="text" defaultValue={modalItem.name}/>
                     </label>
                     <label>
-                        Item Cost: <input id="itemCost" type="text" defaultValue={modalItem.cost}/>
+                        Item Cost: <input className='mr-2' id="itemCost" type="text" defaultValue={modalItem.cost}/>
+                    </label>
+                    <label>
+                        Currency Unit:
+                        <select id='costUnit' className='mr-2'>
+                            <option value='gp'>Gold Pieces</option>
+                            <option value='sp'>Silver Pieces</option>
+                            <option value='cp'>Copper Pieces</option>
+                        </select>
                     </label>
                     <label>
                         Item Rarity:
-                        <select id="itemRarity">
-                            <option value="Common">Common</option>
-                            <option value="Uncommon">Uncommon</option>
+                        <select id="itemRarity" className='mr-2'>
+                            <option value="Common" >Common</option>
+                            <option value="Uncommon" >Uncommon</option>
                             <option value="Rare">Rare</option>
                             <option value="Very Rare">Very Rare</option>
                             <option value="Legendary">Legendary</option>

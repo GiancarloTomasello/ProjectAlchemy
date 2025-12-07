@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+
+
 .card{
   border: 1px solid hsl(0, 0%, 80%);
   border-radius: 10px;
@@ -250,3 +252,6 @@ tbody tr :nth-child(3) {
   padding: 5px;
 }
 
+select{
+  background-color: hsl(0, 0%, 30%);
+}

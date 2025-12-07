@@ -16,7 +16,7 @@ function Card(props){
             </h2>
             <div className="flex gap-1 justify-center">
                 <p>
-                    {props.overrides && props.overrides.cost?props.overrides.cost:props.cost}
+                    {props.overrides && props.overrides.cost?props.overrides.cost+props.overrides.unit:props.cost+props.unit}
                 </p>
                 <p>|</p>
                 <p>
