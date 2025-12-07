@@ -14,6 +14,8 @@ function SidePannel(){
     const [filteredCatalog, setfilteredCatalog] = useState([]);
     const [rarityFilter, setRarityFilter] = useState('any');
     const [typeFilter, setTypeFilter] = useState('any');
+    const [textFilter, settextFilter] = useState('');
+
 
     const TogglePanel = useCallback(() => {
         if(sidePanelRef.current){
@@ -61,9 +63,11 @@ function SidePannel(){
         //Filter by type
         newCatalog = newCatalog.filter(item => item.equipmentCatagory === typeFilter || typeFilter === 'any')
 
+        //Filter by name
+        newCatalog = newCatalog.filter(item => item.name.toLowerCase().includes(textFilter.toLowerCase()) || textFilter == '')
         console.log("filtered catalog", newCatalog)
         setfilteredCatalog(newCatalog)
-    }, [itemCatalog, rarityFilter, typeFilter])
+    }, [itemCatalog, rarityFilter, typeFilter, textFilter])
 
     useEffect(() => {
         filterCatalog()
@@ -87,6 +91,27 @@ function SidePannel(){
         setTypeFilter(filter);
     }
 
+    const filterTest = (e) =>{
+        console.log("current searchVal:", e.target.value)
+        settextFilter(e.target.value)
+    }
+
+    function resetFilters(){
+        console.log('reset')
+
+        const rarityElement = document.getElementById('raritySelector')
+        const typeElement = document.getElementById('typeSelector')
+
+        if(rarityElement)
+            rarityElement.selectedIndex = 0;
+            setRarityFilter('any')
+        if(typeElement)
+            typeElement.selectedIndex = 0;
+            setTypeFilter('any')
+
+        settextFilter('')
+    }
+
     return(
         <>
         <button ref={buttonRef} id="sidePannelButton" onClick={TogglePanel}
@@ -98,10 +123,15 @@ function SidePannel(){
             <div className="sidepanel header">
                 <h1 className="font-bold">Item List</h1>
             </div>
-            <div className='flex flex-row m-1 bg-stone-400 border-4 border-black-500 rounded p-2 justify-center gap-5'>
+            <div className='flex flex-row flex-wrap m-1 bg-stone-400 border-4 border-black-500 rounded p-2 justify-center'>
+                <label className='w-full'>
+                    Search bar:
+                    <input id='searchbar' type='text' className='w-3/5 ml-1 border-2 border-black-500' value={textFilter} onChange={filterTest}/>
+                    <button className='ml-2' onClick={resetFilters}>Reset Filters</button>
+                </label>
                 <label>
                     Rarity: 
-                    <select onChange={filterRarity} className='m-3 border-1 border-black rounded text-center'>
+                    <select id='raritySelector' onChange={filterRarity} className='m-3 border-1 border-black rounded text-center'>
                         <option value='any'>Any</option>
                         <option value='Common'>Common</option>
                         <option value='Uncommon'>Uncommon</option>
@@ -113,7 +143,7 @@ function SidePannel(){
                 </label>
                 <label>
                     Type: 
-                    <select onChange={filterType} className='m-3 border-1 border-black rounded text-center'>
+                    <select id='typeSelector' onChange={filterType} className='m-3 border-1 border-black rounded text-center'>
                         <option value='any' selected>Any</option>
                         <option value='Adventuring Gear'>Adventuring Gear</option>
                         <option value='Armor'>Armor</option>
