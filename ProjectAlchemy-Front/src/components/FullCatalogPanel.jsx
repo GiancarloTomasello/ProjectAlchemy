@@ -128,7 +128,7 @@ function FullCatalogPanel(){
                     <button className="absolute insert-x-0 bottom-10 left-1/4 w-1/2 p-5 justify-center content-center">Submit</button>
                 </form>
             </Modal>
-                <ul id='StoreCatalog' className="flex">
+                <ul id='StoreCatalog' className="flex flex-wrap">
                     {storeCatalog}
                 </ul>
             </div>
