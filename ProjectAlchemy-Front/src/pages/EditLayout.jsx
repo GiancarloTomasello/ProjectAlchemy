@@ -18,9 +18,7 @@ function EditLayout(){
 
         const updateShopDetails = useCallback(async ()=>{
             try{
-                console.log("current store id", currentStoreId)
                 const result = await axios.get(`http://localhost:3001/getStore/${currentStoreId}`)
-                console.log("PLS DONT BREAK", result.data)
                 setShopDetails(result.data[0])
             }catch(err){
                 console.log(err)
@@ -35,7 +33,6 @@ function EditLayout(){
         })
 
         setComponentList(newList)
-        console.log('EDIT LAYOUT USE EFFECT')
 
         updateShopDetails()
       }, [storeLayout, updateShopDetails])
@@ -46,14 +43,13 @@ function EditLayout(){
         const campaignList = await fetchCampaignList(1)
         setCampaignList(campaignList);
         console.log(campaignList)
-    }, [fetchCampaignList, currentStoreId])
+    }, [fetchCampaignList])
 
       useEffect(() => {
         updateCampaignList()
       }, [updateCampaignList])
 
       function saveLayoutChanges(){
-        console.log('Call update on backend')
         updateStoreLayout()
       }
 
