@@ -34,6 +34,12 @@ export const StoreProvider = ({ children }) => {
     'FullCatalog': FullCatalogPanel
     };
 
+    const sentimentMap = {
+        'Distrusting +10%': 10,
+        'Neutral +0%': 0,
+        'Trusting -10%': -10
+    }
+
     useEffect(() => {
     //Make GET request to fetch all D&D items
     axios
@@ -84,10 +90,10 @@ export const StoreProvider = ({ children }) => {
         }
     }
 
-    const fetchCampaignList = async(campaignId) =>{
+    const fetchCampaignList = async(userId) =>{
         console.log("Get users campaigns")
         try{
-            const response = await axios.get(`http://localhost:3001/getCampaigns/${campaignId}`)
+            const response = await axios.get(`http://localhost:3001/getCampaigns/${userId}`)
             return response.data
         }catch(err){
             console.log(err);
@@ -174,7 +180,8 @@ export const StoreProvider = ({ children }) => {
   const getStoreDetails = async() =>{
     try{
         const result = await axios.get(`http://localhost:3001/getStore/${currentStoreId}`)
-        setStoreDetails(result.data)
+        //.log("context store details", result.data)
+        //setStoreDetails(result.data)
         return result.data
     }catch(err){
         console.log(err)
@@ -197,7 +204,7 @@ export const StoreProvider = ({ children }) => {
         componentMap, shoppingCart, setShoppingCart, createNewStorefront, createNewCampaign,
         fetchStoreLayout, fetchCampaignList, currentStoreId, setCurrentStoreId, updateItemOverride,
         storeOrders, getStoreOrders, makePurchase, getStoreDetails, storeDetails, setCampaignList,
-        updateStoreDetails
+        updateStoreDetails, sentimentMap
     }
     return (
         <StoreContext.Provider value={value}>

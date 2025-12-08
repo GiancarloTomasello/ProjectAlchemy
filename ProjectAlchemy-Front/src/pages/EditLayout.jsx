@@ -2,18 +2,12 @@ import { useCallback, useEffect, useState } from 'react';
 import EditNavBar from '../components/EditNavBar.jsx'
 import { useStoreContext } from '../context.jsx'
 import ComponentDisplayCard from '../components/ComponentDisplayCard.jsx';
+import toast from 'react-hot-toast';
 import axios from 'axios';
-
-const sentmentMap = [
-    'Distrusting +10%',
-    'Neutral +0%',
-    'Trusting -10%'
-]
-
 
 function EditLayout(){
       const {storeLayout, updateStoreLayout, currentStoreId, fetchCampaignList,
-                updateStoreDetails} = useStoreContext();
+                updateStoreDetails, sentimentMap} = useStoreContext();
       const [componentList, setComponentList ]= useState([]);
       const [shopDetails, setShopDetails] = useState([]);
 
@@ -48,7 +42,8 @@ function EditLayout(){
 
       
     const updateCampaignList = useCallback(async() =>{
-        const campaignList = await fetchCampaignList(currentStoreId)
+        //hardcoded for user !!!
+        const campaignList = await fetchCampaignList(1)
         setCampaignList(campaignList);
         console.log(campaignList)
     }, [fetchCampaignList, currentStoreId])
@@ -77,6 +72,8 @@ function EditLayout(){
 
             console.log(newDetails);
             updateStoreDetails(newDetails)
+
+            toast('Store details have been updated')
         } 
       
     return(
@@ -138,7 +135,7 @@ function EditLayout(){
                                 <label>
                                     Sentiment:
                                     <select id='shopSentiment'>
-                                        {sentmentMap.map(sentiment => {
+                                        {Object.keys(sentimentMap).map(sentiment => {
                                                 if(shopDetails.npc_sentiment && sentiment == shopDetails.npc_sentiment){
                                                     return <option selected value={sentiment}>{sentiment}</option>
                                                 }else if(!shopDetails.npc_sentiment && sentiment =='Neutral +0%'){

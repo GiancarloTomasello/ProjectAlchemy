@@ -31,9 +31,8 @@ function ShopPreview() {
   const [dynamicShopComponent, setDynamicShopComponent] = useState([]);
 
   useEffect(()=>{
-    console.log("Store Layout: ", storeLayout)
+    //console.log("Store Layout: ", storeLayout)
     const shopComponents = storeLayout.map((item,index) =>{
-      //console.log(`${index}, ${item.name}`)
       const DynamicComponent = componentMap[item.name]
       const newComponent = DynamicComponent ? <DynamicComponent {...item.props} key={index}/> : <p>Component Not found</p>
       return newComponent
@@ -44,20 +43,8 @@ function ShopPreview() {
   return (
     <>
       <SidePannel/>
-      <h1>DB ITEMS</h1>
-      <ul id='dbitems' className="flex">
-        {(!isLoadingCatalog && !catalogError) ?
-          itemCatalog.filter(item => stockedItemList.some((stockitem) => stockitem.api_index === item.id && stockitem.inStock))
-                      .map(item => <li><Card {...item} key={item.id}/></li>):
-                        <p>Loading</p>}
-      </ul>
-
-      {/* <ul id='equptList'>DB Equipment LIST</ul>
-      <ul id='magicList'>DB Magic LIST</ul> */}
       <div id='dynamicShop'>
           {dynamicShopComponent ? dynamicShopComponent : <p>customShopLayoutNull</p>}
-
-          {/* {DynamicComponent ? <DynamicComponent item={items[0]}/> : <p>Component Not found</p>} */}
       </div>
     </>
   )

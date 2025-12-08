@@ -7,6 +7,17 @@ function Card(props){
             props.interactFunction(props)
         }
     }
+
+    function modifyCost(cost){
+        console.log("sentiment", props.sentimentMod)
+        if(!props.sentimentMod){
+            return cost
+        }
+
+        const modCost = Math.ceil(parseInt(cost)+parseInt(cost)*(1/props.sentimentMod))
+
+        return `${modCost}`
+    }
     
     return(
         <div onClick={cardSelected} className="card">
@@ -16,7 +27,8 @@ function Card(props){
             </h2>
             <div className="flex gap-1 justify-center">
                 <p>
-                    {props.overrides && props.overrides.cost?props.overrides.cost+props.overrides.unit:props.cost+props.unit}
+                    {
+                    props.overrides && props.overrides.cost?modifyCost(props.overrides.cost)+props.overrides.unit:modifyCost(props.cost)+props.unit}
                 </p>
                 <p>|</p>
                 <p>

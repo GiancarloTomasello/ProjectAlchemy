@@ -7,11 +7,12 @@ import Modal from 'react-modal';
 
 
 function FullCatalogPanel(){
-    const {itemCatalog, stockedItemList, setStockedItemList, currentStoreId, updateItemOverride} = useStoreContext();
+    const {itemCatalog, stockedItemList, setStockedItemList, currentStoreId, updateItemOverride, getStoreDetails, sentimentMap} = useStoreContext();
     const [storeCatalog, setStoreCatalog] = useState([]);
 
     const [modalIsOpen, SetModalIsOpen] = useState(false);
     const [modalItem, setModalItem] = useState({})
+    const [sentimentMod, setSentimentMod] = useState(0);
 
   function openModal(item){
     SetModalIsOpen(true);
@@ -36,23 +37,33 @@ function FullCatalogPanel(){
             const found = stockedItemList.find(stockItem => stockItem.api_index == index)
             return found.overrides
         }
+        
+        const getSentimentVal = async() => {
+            const val = await getStoreDetails();
+            setSentimentMod(sentimentMap[val[0].npc_sentiment])
+            console.log("sentMod:", sentimentMod)
+        }
+        getSentimentVal()
+        //const sentimentMod = getSentimentVal()
 
         const catalogDisplay = itemCatalog.filter(
             item => stockedItemList.some(
             (stockitem) => stockitem.api_index === item.id
              && stockitem.inStock)).map(
                 (item) =>{
+                    const overrides = getOverridefromStock(item.id)
                     if(isPlayerPath){
-                        return <li><ShopCard {...item} key={item.id}/></li>
+                        return <li><ShopCard {...item} overrides={overrides} sentimentMod={sentimentMod} key={item.id}/></li>
                     }else{
-                        const overrides = getOverridefromStock(item.id)
-                        return <li><Card {...item} overrides={overrides} interactFunction={openModal} key={item.id}/></li>
+                        return <li><Card {...item} overrides={overrides} interactFunction={openModal} sentimentMod={sentimentMod} key={item.id}/></li>
                     }
             })
 
-        setStoreCatalog(catalogDisplay)
 
-    }, [setStoreCatalog, itemCatalog, stockedItemList, isPlayerPath])
+        setStoreCatalog(catalogDisplay)
+        console.log('store details')
+
+    }, [setStoreCatalog, itemCatalog, stockedItemList, isPlayerPath, getStoreDetails, sentimentMap, sentimentMod])
     
     const updateItemOverrides = async(e) =>{
         e.preventDefault();
