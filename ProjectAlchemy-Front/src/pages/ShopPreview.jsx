@@ -33,7 +33,7 @@ function ShopPreview() {
   useEffect(()=>{
     //console.log("Store Layout: ", storeLayout)
     const shopComponents = storeLayout.map((item,index) =>{
-      const DynamicComponent = componentMap[item.name]
+      const DynamicComponent = componentMap[item.name].component
       const newComponent = DynamicComponent ? <DynamicComponent {...item.props} key={index}/> : <p>Component Not found</p>
       return newComponent
     })

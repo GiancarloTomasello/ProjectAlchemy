@@ -4,17 +4,29 @@ import { useStoreContext } from '../context.jsx'
 import ComponentDisplayCard from '../components/ComponentDisplayCard.jsx';
 import toast from 'react-hot-toast';
 import axios from 'axios';
+import Modal from 'react-modal';
+import { BannerSetUp } from '../components/Banner.jsx';
+
 
 function EditLayout(){
-      const {storeLayout, updateStoreLayout, currentStoreId, fetchCampaignList,
-                updateStoreDetails, sentimentMap} = useStoreContext();
-      const [componentList, setComponentList ]= useState([]);
-      const [shopDetails, setShopDetails] = useState([]);
+    const {storeLayout, updateStoreLayout, currentStoreId, fetchCampaignList,
+            updateStoreDetails, sentimentMap, componentMap} = useStoreContext();
+    const [componentList, setComponentList ]= useState([]);
+    const [shopDetails, setShopDetails] = useState([]);
 
-      const [campaignList, setCampaignList] = useState([]);
+    const [campaignList, setCampaignList] = useState([]);
 
+    const [modalIsOpen, SetModalIsOpen] = useState(false);
+    const [modalItem, setModalItem] = useState({});
 
+    function openModal(item){
+        SetModalIsOpen(true);
+        setModalItem(item)
+    }
 
+    function closeModal(){
+        SetModalIsOpen(false)
+    }
 
         const updateShopDetails = useCallback(async ()=>{
             try{
@@ -72,19 +84,45 @@ function EditLayout(){
             toast('Store details have been updated')
         } 
       
+        function addComponent(){
+            openModal()
+        }
+
+        console.log('componentMap', componentMap)
+
+        const DynamicComponent = componentMap['Banner'].setUp
+
     return(
         <>
+            <Modal
+                id="Modal"
+                currentLabel="ItemCustomizationModal"
+                isOpen={modalIsOpen}
+                onRequestClose={closeModal}
+                className="modalContent"
+            >
+                <h1>Select a new Component</h1>
+                <label>Component List:</label>
+                <select>
+                    {Object.keys(componentMap).map(componentName => {
+                            return <option>{componentName}</option>   
+                        }
+                    )}
+                </select>
+                {DynamicComponent?<DynamicComponent/>:<h2>ERROR LOADING COMPONENT SETUP</h2>}
+            </Modal>
             <h1 className='text-center'>Edit Current Shop details</h1>
             <div className='flex flex-row justify-around'>
                 <div className='basis-1/2'>
                     <h1>List of current components</h1>
                     <div className='justify-center'>
+                        <button className='SaveButton' onClick={saveLayoutChanges}>Save Updated Layout</button>
+                        <button onClick={addComponent}>Add New Component</button>
+                    </div>
+                    <div className='justify-center'>
                         <ol id="storeComponentList">
                             {componentList}
                         </ol>
-                    </div>
-                    <div className='justify-center'>
-                        <button className='SaveButton' onClick={saveLayoutChanges}>Save Updated Layout</button>
                     </div>
                 </div>
                 <div className='basis-1/2'>

@@ -267,6 +267,27 @@ app.put('/updateShop', async(req,res) => {
     }
 })
 
+app.put('/addLayoutElement', async(req,res) =>{
+
+  console.log("store_layout:", req.body.storeLayout)
+
+  const updateQuery = `
+    UPDATE storefront SET
+      store_layout = $$${JSON.stringify(req.body.storeLayout)}$$::JSON
+      where id = ${req.body.shopId}
+  `
+
+  console.log('updateQuery:', updateQuery)
+
+  try {
+      const result = await sql.query(updateQuery);
+      res.status(200).send(result)
+    }catch (error){
+      console.error('Error adding store layout:', error)
+      res.status(500).json({error: 'Failed to add new layout component' })
+  }
+})
+
 app.put('/createCampaign', async(req,res) =>{
   console.log('Req.body:', req.body)
 

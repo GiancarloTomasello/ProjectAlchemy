@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useContext, useState, use } from 'react';
 import axios from 'axios';
 import Card from './components/Card';
-import Banner from './components/Banner';
+import {Banner, BannerSetUp} from './components/Banner';
 import ShopCard from './components/ShopCard';
 import FullCatalogPanel from './components/FullCatalogPanel';
 
@@ -28,10 +28,14 @@ export const StoreProvider = ({ children }) => {
     const [campaignList, setCampaignList] = useState([]);
 
     const componentMap ={
-    'Card': Card,
-    'Banner': Banner,
-    'ShopCard': ShopCard,
-    'FullCatalog': FullCatalogPanel
+    'Banner': {
+        component: Banner,
+        setUp: BannerSetUp
+    },
+    'FullCatalog': {
+        component: FullCatalogPanel,
+        setUp: null
+    } 
     };
 
     const sentimentMap = {
@@ -139,6 +143,20 @@ export const StoreProvider = ({ children }) => {
     }
   }
 
+  const addStoreComponent = async(newComponent) =>{
+    const newStoreLayout = [...storeLayout, newComponent]
+    const body = {
+        shopId: currentStoreId,
+        storeLayout: newStoreLayout
+    }
+    try{
+        await axios.put('http://localhost:3001/addLayoutElement', body)
+        setStoreLayout(newStoreLayout)
+    }catch(err){
+        console.log(err)
+    }
+  }
+
     const createNewCampaign = async(campaigndetail) => {
     try{
         //HARD CODED USER ID
@@ -204,7 +222,7 @@ export const StoreProvider = ({ children }) => {
         componentMap, shoppingCart, setShoppingCart, createNewStorefront, createNewCampaign,
         fetchStoreLayout, fetchCampaignList, currentStoreId, setCurrentStoreId, updateItemOverride,
         storeOrders, getStoreOrders, makePurchase, getStoreDetails, storeDetails, setCampaignList,
-        updateStoreDetails, sentimentMap
+        updateStoreDetails, sentimentMap, addStoreComponent
     }
     return (
         <StoreContext.Provider value={value}>
