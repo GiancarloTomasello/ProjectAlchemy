@@ -10,6 +10,7 @@ import Modal from 'react-modal';
 import CampaignCreationPage from './pages/CampaignCreationPage.jsx'
 import ShopListPage from './pages/ShopListPage.jsx'
 import OrderPage from './pages/OrdersPage.jsx'
+import WelcomePage from './pages/WelcomePage.jsx'
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
   return (
     <>
      <Routes>
+        <Route path='/' element={<WelcomePage/>}/>
         <Route path="/campaignCreation" element={<CampaignCreationPage/>}/>
         <Route path="/shopCreation" element={<ShopCreationPage/>}/>
         <Route path="/storeList/:campaignid" element={<ShopListPage/>}/>
