@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useContext, useState } from 'react';
+import React, { createContext, useEffect, useContext, useState, use } from 'react';
 import axios from 'axios';
 import Card from './components/Card';
 import Banner from './components/Banner';
@@ -17,12 +17,15 @@ export const StoreProvider = ({ children }) => {
     const [stockedItemList, setStockedItemList] = useState([]);
 
     const [storeLayout, setStoreLayout] = useState([]);
+    const [storeDetails, setStoreDetails] = useState({});
 
     const [shopDisplayPage, setShopDisplayPage] = useState('preview');
     const [shoppingCart, setShoppingCart] = useState([]);
 
     const [currentStoreId, setCurrentStoreId] = useState(1);
     const [storeOrders, setStoreOrders] = useState([]);
+
+    const [campaignList, setCampaignList] = useState([]);
 
     const componentMap ={
     'Card': Card,
@@ -122,6 +125,14 @@ export const StoreProvider = ({ children }) => {
     }
   }
 
+  const updateStoreDetails = async(storeDetails) =>{
+    try{
+        await axios.put('http://localhost:3001/updateShop', storeDetails)
+    }catch(err){
+        console.log(err)
+    }
+  }
+
     const createNewCampaign = async(campaigndetail) => {
     try{
         //HARD CODED USER ID
@@ -159,6 +170,16 @@ export const StoreProvider = ({ children }) => {
     }
   }
   
+  //causing an infinite loop?!?!
+  const getStoreDetails = async() =>{
+    try{
+        const result = await axios.get(`http://localhost:3001/getStore/${currentStoreId}`)
+        setStoreDetails(result.data)
+        return result.data
+    }catch(err){
+        console.log(err)
+    }
+  }
 
   useEffect(()=>{
     setStockedItemList(stockedItemInfo.map((item) => {
@@ -175,7 +196,8 @@ export const StoreProvider = ({ children }) => {
         updateStoreCatalog, shopDisplayPage, setShopDisplayPage, updateStoreLayout,
         componentMap, shoppingCart, setShoppingCart, createNewStorefront, createNewCampaign,
         fetchStoreLayout, fetchCampaignList, currentStoreId, setCurrentStoreId, updateItemOverride,
-        storeOrders, getStoreOrders, makePurchase
+        storeOrders, getStoreOrders, makePurchase, getStoreDetails, storeDetails, setCampaignList,
+        updateStoreDetails
     }
     return (
         <StoreContext.Provider value={value}>

@@ -10,10 +10,13 @@ import { Outlet, useParams } from 'react-router-dom'
 function ShopPreview() {
   const {setCurrentStoreId} = useStoreContext(); //Causing a Uncaught TypeError: (intermediate value)() is undefined, but not consistent
 
-  const {storeid} = useParams();
-  if(storeid && setCurrentStoreId){
-    setCurrentStoreId(storeid)
-  }
+ 
+   const {storeid} = useParams();
+    if(storeid && setCurrentStoreId){
+      console.log("found store id to be ", storeid)
+      setCurrentStoreId(storeid)
+    }
+
 
   return (
     <>

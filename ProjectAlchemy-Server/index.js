@@ -246,6 +246,27 @@ app.put('/createShop', async(req,res) =>{
   }
 })
 
+app.put('/updateShop', async(req,res) => {
+  const query = `
+    UPDATE storefront SET
+      store_name = $$${req.body.shopName}$$,
+      welcome_message = $$${req.body.welcomeMessage}$$,
+      campaign_id = ${req.body.campaign_id},
+      npc_sentiment = $$${req.body.storeSentiment}$$,
+      "isPublic" = ${req.body.isPublic}
+    WHERE id = ${req.body.shopId}
+  `
+    console.log(query)
+
+    try {
+      const result = await sql.query(query);
+      res.status(200).send(result)
+    }catch (error){
+      console.error('Error updating store details:', error)
+      res.status(500).json({error: 'Failed to update store details' })
+    }
+})
+
 app.put('/createCampaign', async(req,res) =>{
   console.log('Req.body:', req.body)
 
