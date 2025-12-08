@@ -156,4 +156,23 @@ function FullCatalogPanel(){
     )
 }
 
+export function FullCatalogSetUp(){
+    const {addStoreComponent} = useStoreContext();
+
+    function finishSetup(){
+        const newComponent = {
+            name: "FullCatalog",
+            props: {}
+        }
+        addStoreComponent(newComponent);
+    }
+
+    return(
+        <div>
+            <h2>No input needed for set up!</h2>
+            <button onClick={finishSetup}>submit</button>
+        </div>
+    );
+}
+
 export default FullCatalogPanel

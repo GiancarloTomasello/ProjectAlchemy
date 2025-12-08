@@ -19,6 +19,8 @@ function EditLayout(){
     const [modalIsOpen, SetModalIsOpen] = useState(false);
     const [modalItem, setModalItem] = useState({});
 
+    const [component, setComponent] = useState(null)
+
     function openModal(item){
         SetModalIsOpen(true);
         setModalItem(item)
@@ -48,6 +50,15 @@ function EditLayout(){
 
         updateShopDetails()
       }, [storeLayout, updateShopDetails])
+
+      useEffect(()=>{
+            const SetupComponent = componentMap['Banner'].setUp;
+            const newComponent = SetupComponent ? <SetupComponent/>: <p>Component Not Found</p>
+
+            console.log("newComponent=", newComponent)
+            if(newComponent)
+                setComponent(newComponent)
+      }, [componentMap])
 
       
     const updateCampaignList = useCallback(async() =>{
@@ -91,6 +102,22 @@ function EditLayout(){
         console.log('componentMap', componentMap)
 
         const DynamicComponent = componentMap['Banner'].setUp
+        
+        function updateSetupDisplay(){
+            console.log('Update the display!')
+            const selectedComponent = document.getElementById('componentSelector').value
+            console.log(selectedComponent)
+            console.log(componentMap[selectedComponent].setUp)
+
+            if(selectedComponent){
+                const SetupComponent = componentMap[selectedComponent].setUp
+                const newComponent = SetupComponent ? <SetupComponent/>: <p>Component Not Found</p>
+                console.log(newComponent)
+                setComponent(newComponent)
+            }else{
+                console.log("CANT FIND SELECTED COMPONENT VALUE")
+            }
+        }
 
     return(
         <>
@@ -103,13 +130,13 @@ function EditLayout(){
             >
                 <h1>Select a new Component</h1>
                 <label>Component List:</label>
-                <select>
+                <select id='componentSelector' onChange={updateSetupDisplay}>
                     {Object.keys(componentMap).map(componentName => {
                             return <option>{componentName}</option>   
                         }
                     )}
                 </select>
-                {DynamicComponent?<DynamicComponent/>:<h2>ERROR LOADING COMPONENT SETUP</h2>}
+                {component}
             </Modal>
             <h1 className='text-center'>Edit Current Shop details</h1>
             <div className='flex flex-row justify-around'>

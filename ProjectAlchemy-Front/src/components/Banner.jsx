@@ -46,7 +46,11 @@ export function BannerSetUp(){
                 <div className="basis-full">
                     <label>
                         Title for banner:
-                        <input id="bannerTitle" placeholder="Insert text for the Banner"/>
+                        <input 
+                            className="ml-2"
+                            id="bannerTitle"
+                            placeholder="Insert text for the Banner"
+                         />
                     </label>
                 </div>
                 <div className="basis-full">

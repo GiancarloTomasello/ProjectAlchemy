@@ -3,7 +3,7 @@ import axios from 'axios';
 import Card from './components/Card';
 import {Banner, BannerSetUp} from './components/Banner';
 import ShopCard from './components/ShopCard';
-import FullCatalogPanel from './components/FullCatalogPanel';
+import FullCatalogPanel, {FullCatalogSetUp} from './components/FullCatalogPanel';
 
 export const StoreContext = createContext();
 
@@ -34,7 +34,7 @@ export const StoreProvider = ({ children }) => {
     },
     'FullCatalog': {
         component: FullCatalogPanel,
-        setUp: null
+        setUp: FullCatalogSetUp
     } 
     };
 
