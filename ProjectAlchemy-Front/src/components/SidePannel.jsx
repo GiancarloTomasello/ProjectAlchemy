@@ -22,37 +22,20 @@ function SidePannel(){
                 if(sidePanelState){
                     console.log("Hide Panel")
                     sidePanelRef.current.style.transform="translate(100%)"
-                    //buttonRef.current.style.right="1/4"
+                    buttonRef.current.style.right="0%"
+                    //buttonRef.current.style.transform="translate(300%)"
                     setSidePanelState(false);
                 }else{
                     console.log("show panel")
                     sidePanelRef.current.style.transform="translate(0%)"
-                    //buttonRef.current.style.right="0"
+                    buttonRef.current.style.right="25%"
+                    //buttonRef.current.style.transform="translate(0%)"
                     setSidePanelState(true);
                 }
             }else{
                 alert("ISSUE WITH SIDE PANEL")            
             }
     }, [setSidePanelState, sidePanelState])
-
-    // //Implementation to close panel when clicking off
-    // //BUG: Currently triggers when clicking on itemCards too
-    // useEffect(() => {
-    //     function handler (e){
-    //         console.log(e.target.parentElement.contains(sidePanelRef.current))
-    //         if(sidePanelRef.current && sidePanelState == true && e.target != buttonRef.current){
-    //             if(e.target != sidePanelRef.current){
-    //                 //TogglePanel()
-    //             }
-    //         }
-    //     }
-
-    //     document.addEventListener("click", handler)
-
-    //     return () => {
-    //         document.removeEventListener('click', handler)
-    //     }
-    // }, [sidePanelState, TogglePanel])
 
     const filterCatalog = useCallback(() =>{
         let newCatalog = itemCatalog
@@ -115,8 +98,8 @@ function SidePannel(){
     return(
         <>
         <button ref={buttonRef} id="sidePannelButton" onClick={TogglePanel}
-            className="fixed z-20 right-1/4 left-auto rounded-md bg-white/10 px-2.5 py-1.5 hover:bg-white/20 -transform-x-10">
-                Testing Side
+            className="fixed z-20 right-0 rounded-md bg-white/10 px-2.5 py-1.5 hover:bg-white/20">
+                Toggle Item Catalog
         </button>
         <div id="sidePanel" ref={sidePanelRef} className="sidePanel">
 

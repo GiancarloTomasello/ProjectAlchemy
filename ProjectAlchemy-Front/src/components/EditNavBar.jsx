@@ -17,9 +17,9 @@ function EditNavBar(){
             <NavLink to="EditLayout">
                 <button id='layoutButton'>Edit Layout</button>
             </NavLink>
-            <NavLink to="EditCatalog">
+            {/* <NavLink to="EditCatalog">
                 <button id='catalogButton'>Edit Catalog</button>
-            </NavLink>
+            </NavLink> */}
             <NavLink to="OrderList">
                 <button id='catalogButton'>Orders</button>
             </NavLink>

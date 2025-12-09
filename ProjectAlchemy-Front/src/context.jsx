@@ -117,9 +117,7 @@ export const StoreProvider = ({ children }) => {
 
   const updateStoreLayout = async(storeId) => {
     try{
-        console.log(storeLayout)
-        const storeId = '1'
-        await axios.put(`http://localhost:3001/saveStoreLayout/${storeId}`, storeLayout)
+        await axios.put(`http://localhost:3001/saveStoreLayout/${storeId}`, currentStoreId)
     }catch(err){
         console.log(err)
     }
