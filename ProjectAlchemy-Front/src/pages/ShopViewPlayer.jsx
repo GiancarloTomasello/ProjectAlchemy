@@ -23,7 +23,7 @@ function ShopViewPlayer(){
           if(item.name == 'Card'){
             item.name = 'ShopCard'
           }
-          const DynamicComponent = componentMap[item.name]
+          const DynamicComponent = componentMap[item.name].component
           const newComponent = DynamicComponent ? <DynamicComponent {...item.props} key={index}/> : <p>Component Not found</p>
           return newComponent
         })

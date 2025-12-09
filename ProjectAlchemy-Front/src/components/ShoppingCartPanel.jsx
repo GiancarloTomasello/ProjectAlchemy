@@ -15,12 +15,12 @@ function ShoppingCartPanel(){
                 if(sidePanelState){
                     console.log("Hide Panel")
                     sidePanelRef.current.style.transform="translate(100%)"
-                    //buttonRef.current.style.right="1/4"
+                    buttonRef.current.style.right="0%"
                     setSidePanelState(false);
                 }else{
                     console.log("show panel")
                     sidePanelRef.current.style.transform="translate(0%)"
-                    //buttonRef.current.style.right="0"
+                    buttonRef.current.style.right="25%"
                     setSidePanelState(true);
                 }
             }else{
@@ -48,8 +48,8 @@ function ShoppingCartPanel(){
     return(
         <>
         <button ref={buttonRef} id="sidePannelButton" onClick={TogglePanel}
-            className="fixed z-20 right-1/4 left-auto rounded-md bg-white/10 px-2.5 py-1.5 hover:bg-white/20 -transform-x-10">
-                Testing Side
+            className="fixed z-20 right-0 left-auto rounded-md bg-white/10 px-2.5 py-1.5 hover:bg-white/20">
+                Toggle Cart
         </button>
         <div id="sidePanel" ref={sidePanelRef} className="sidePanel">
 

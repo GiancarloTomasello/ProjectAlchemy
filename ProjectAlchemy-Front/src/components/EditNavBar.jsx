@@ -1,10 +1,14 @@
 import { NavLink } from 'react-router-dom'
 import toast, { Toaster } from 'react-hot-toast';
+import { useStoreContext } from '../context';
 
 function EditNavBar(){
+    const {currentStoreId} = useStoreContext();
 
+
+    
     function createShopLink(){
-        const shareLink = 'http://localhost:5173/player/store/1';
+        const shareLink = `http://localhost:5173/player/store/${currentStoreId}`;
         toast(shareLink)
     }
 
